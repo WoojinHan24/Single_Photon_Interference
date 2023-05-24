@@ -30,9 +30,10 @@ class Data_set:
 
     def print_data(self, index_list = []):
         if index_list == []:
-            index_list = range(len(self.data_list))
-            
+            index_list = [0,1,-2,-1]
+        
+        print("Align Condition", self.align_condition)
         print("In parameters ", self.parameters_name)
-        print("Measured results ", self.results.name)
+        print("Measured results ", self.results_name)
         for index in index_list:
             self.data_list[index].print_data()
