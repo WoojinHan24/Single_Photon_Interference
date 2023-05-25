@@ -161,10 +161,38 @@ except FileNotFoundError:
 
     with open("./datum.pkl", "wb") as f:
         pickle.dump(datum,f)
-            
 
-       
-for experiment in experiments:
-    for data_set in datum[experiment]:
-        print(experiment)
-        data_set.print_data()
+
+experiment = 'laser_experiments'
+data_set_list = datum[experiment]
+#for data_set in data_set_list:
+#    data_set.print_data()
+
+def laser_exp_fitting_function(
+    x, A, s ,m
+):
+    return A*np.exp(-(x-m)**2/2/s**2)
+    
+
+
+for align in range(1,7):
+    for exp_type in ['double_slit', 'R_single_slit', 'L_single_slit']:
+        laser_raw_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: x.results[0],
+            {'align' : align, 'exp_type' : exp_type},
+            x_label = "position [cm]",
+            y_label = "voltage [mV]",
+            labels = lambda x: f"{x.align_condition['align']}" + x.align_condition['exp_type'],
+            fitting_function=laser_exp_fitting_function,
+            p0 = [500,0.5,0.5],
+            truncate = lambda x: True if x<0.8 else False,
+            export_param_statics = f"./results/laser({align}_{exp_type})_param_statics.txt"
+        )
+        
+        try:
+            laser_raw_fig.savefig(f"./results/laser({align}_{exp_type})_raw_fig.png")
+        except AttributeError:
+            continue
+            
