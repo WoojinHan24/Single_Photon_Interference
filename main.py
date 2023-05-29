@@ -1,5 +1,7 @@
 import single_photon_interference as spi
+import scipy.integrate as integ
 import numpy as np
+from scipy.constants import pi
 import pandas as pd
 import pickle
 import re
@@ -167,16 +169,113 @@ experiment = 'laser_experiments'
 data_set_list = datum[experiment]
 #for data_set in data_set_list:
 #    data_set.print_data()
+# s_l value is the FWHM/wavelength value. which di's both share
 
-def laser_exp_fitting_function(
-    x, A, s ,m
+def double_slit_modified_function(
+    x,c,I,d1,d2,s_l
 ):
-    return A*np.exp(-(x-m)**2/2/s**2)
+    if x is list:
+        return list(map(lambda a: double_slit_modified_function(a,c,I,d1,d2,s_l),x))
     
+    N=1000
+    a = np.linspace(-5*s_l,5*s_l,N)
+    z=list(map(lambda b: double_slit_fitting_function(x,c,I,d1*(1+b),d2*(1+b),I)*lorentzian(b,s_l),a))
+    return sum(z)*10*s_l/N
+    
+
+def lorentzian(
+    x,fwhm
+):
+    return 1/pi * (1/2*fwhm)/(x**2 + (1/2 * fwhm)**2)
+
+def single_slit_modified_function(
+    x,c,I,d1,s_l
+):
+    if x is list:
+        return list(map(lambda a: single_slit_modified_function(a,c,I,d1,s_l),x))
+    N = 1000
+    a = np.linspace(-5*s_l,5*s_l,N)
+    z = list(map(lambda b: single_slit_fitting_function(x,c,I,d1*(1+b))*lorentzian(b,s_l),a))
+    return sum(z) *10*s_l/N
+
+def double_slit_asymmetry_fitting_function(
+    x, c, I, d1,d2,I2
+):
+    if type(x) == list:
+        return list(map(lambda a: double_slit_asymmetry_fitting_function(a,c,I,d1,d2,I2),x))
+    
+    alpha = pi*(x-c)/(d1)
+    beta = pi* (x-c)/(d2)
+
+
+    return (I+I2 + 2*np.sqrt(I*I2)*np.cos(2*beta))/4 *(np.sinc(alpha))**2
+
+
+def double_slit_fitting_function(
+    x, c, I, d1,d2,I2
+):
+    if type(x) == list:
+        return list(map(lambda a: double_slit_fitting_function(a,c,I,d1,d2,I2),x))
+        
+    alpha = pi*(x-c)/(d1)
+    beta = pi* (x-c)/(d2)
+
+
+    
+    return I*(np.cos(beta))**2 *(np.sinc(alpha))**2
+
+def double_slit_rough_fitting_function(
+    x, c, I, d1,d2,I2
+):
+    if type(x) == list:
+        return list(map(lambda a: double_slit_rough_fitting_function(a,c,I,d1,d2,I2),x))
+    alpha = pi*(x-c)/(d1)
+    beta = pi* (x-c)/(d2)
+
+    return I*(np.cos(beta))**2
+    
+def single_slit_fitting_function(
+    x,c, I, d1
+):
+    alpha = pi * (x-c)/d1
+
+    return I * (np.sinc(alpha))**2
+
+def single_slit_rough_fitting_function(
+    x,c,I,d1
+):
+    alpha = pi*(x-c)/d1
+
+    return I*(1- alpha**2/6)**2
+    
+
+def laser_double_slit_param_setting(
+    x_list, y_list
+):
+    c,I = max(zip(x_list,y_list),key = lambda pair:pair[1])
+    
+    crit_list = []
+    for index in range(len(x_list)-2):
+        if (y_list[index+1]-y_list[index])*(y_list[index+2]-y_list[index+1]) <0:
+            crit_list.append(index+1)
+
+    for index in range(len(crit_list)):
+        if x_list[crit_list[index]] == c:
+            d2 = x_list[crit_list[index+1]] - x_list[crit_list[index-1]]
+
+    d1 = 0.5
+    return [c,I,d1,d2,I]
+
+
+
+wavelength = 689.7*1e-9
+L=0.33
 
 
 for align in range(1,7):
-    for exp_type in ['double_slit', 'R_single_slit', 'L_single_slit']:
+    for exp_type in ['double_slit']:
+        d = 2.7*1e-6
+        a = 5*1e-7
         laser_raw_fig = spi.phys_plot(
             data_set_list,
             lambda x: x.parameters,
@@ -185,10 +284,11 @@ for align in range(1,7):
             x_label = "position [cm]",
             y_label = "voltage [mV]",
             labels = lambda x: f"{x.align_condition['align']}" + x.align_condition['exp_type'],
-            fitting_function=laser_exp_fitting_function,
-            p0 = [500,0.5,0.5],
-            truncate = lambda x: True if x<0.8 else False,
-            export_param_statics = f"./results/laser({align}_{exp_type})_param_statics.txt"
+            fitting_function= double_slit_asymmetry_fitting_function,
+            rough_fitting_functions = [double_slit_rough_fitting_function,double_slit_fitting_function],
+            p0_function = laser_double_slit_param_setting,
+            truncate = lambda x: True if x<0.7 else False,
+            export_param_statics = f"./results/laser({align}_{exp_type})_raw_param_statics.txt"
         )
         
         try:
@@ -196,3 +296,76 @@ for align in range(1,7):
         except AttributeError:
             continue
             
+
+for align in range(1,7):
+    for exp_type in ['R_single_slit', 'L_single_slit']:
+        laser_raw_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: x.results[0],
+            {'align' : align, 'exp_type' : exp_type},
+            x_label = "position [cm]",
+            y_label = "voltage [mV]",
+            labels = lambda x: f"{x.align_condition['align']}" + x.align_condition['exp_type'],
+            fitting_function=single_slit_fitting_function,
+            rough_fitting_functions = [single_slit_rough_fitting_function],
+            p0 = [0.36,505,0.49],
+            truncate = lambda x: True if x<0.8 else False,
+            export_param_statics = f"./results/laser({align}_{exp_type})_raw_param_statics.txt"
+        )
+        
+        try:
+            laser_raw_fig.savefig(f"./results/laser({align}_{exp_type})_raw_fig.png")
+        except AttributeError:
+            continue
+
+
+for align in range(1,7):
+    for exp_type in ['double_slit']:
+        d = 2.7*1e-6
+        a = 5*1e-7
+        laser_raw_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: x.results[0],
+            {'align' : align, 'exp_type' : exp_type},
+            x_label = "position [cm]",
+            y_label = "voltage [mV]",
+            labels = lambda x: f"{x.align_condition['align']}" + x.align_condition['exp_type'],
+            fitting_function= double_slit_modified_function,
+            rough_fitting_functions = [double_slit_rough_fitting_function,double_slit_fitting_function],
+            fitting_param_query = [None,lambda x: [*x[:4],1e-2]],
+            p0_function = laser_double_slit_param_setting,
+            truncate = lambda x: True if x<0.7 else False,
+            export_param_statics = f"./results/laser({align}_{exp_type})_param_statics.txt"
+        )
+        
+        try:
+            laser_raw_fig.savefig(f"./results/laser({align}_{exp_type})_modified_fig.png")
+        except AttributeError:
+            continue
+            
+
+for align in range(1,7):
+    for exp_type in ['R_single_slit', 'L_single_slit']:
+
+        laser_raw_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: x.results[0],
+            {'align' : align, 'exp_type' : exp_type},
+            x_label = "position [cm]",
+            y_label = "voltage [mV]",
+            labels = lambda x: f"{x.align_condition['align']}" + x.align_condition['exp_type'],
+            fitting_function= single_slit_modified_function,
+            rough_fitting_functions = [single_slit_rough_fitting_function,single_slit_fitting_function],
+            fitting_param_query = [None,lambda x: [*x,0.01]],
+            p0 = [0.36,505,0.49],
+            truncate = lambda x: True if x<0.8 else False,
+            export_param_statics = f"./results/laser({align}_{exp_type})_param_statics.txt"
+        )
+        
+        try:
+            laser_raw_fig.savefig(f"./results/laser({align}_{exp_type})_modified_fig.png")
+        except AttributeError:
+            continue

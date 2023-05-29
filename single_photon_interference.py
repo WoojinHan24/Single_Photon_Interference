@@ -80,7 +80,10 @@ def phys_plot(
     error_y = None,
     labels = None,
     fitting_function = None,
+    rough_fitting_functions = None,
+    fitting_param_query = [None,None,None,None],
     p0 = None,
+    p0_function = None,
     truncate = None,
     export_param_statics =None
 ):
@@ -94,6 +97,8 @@ def phys_plot(
     #error_y : error value of y in function of spi.Data() element, it plots error bar in y direction
     #labels : This option puts legend with respect to the function of spi.Data_set() expected to contribute with spi.Data_set.align_condition
     #fitting_function and p0 : fits the curves in function of fitting function, in initial parameters of p0.
+    #rough_fitting_function : function fitting queries not to fit in local minima
+    #fitting_param_query : the query of parameter fixing while the roughly fitting is proceeding
     #truncate : limit fitting regi
     #export param statics : export parameters in form of LaTex table, leave blank in each parameters
     
@@ -110,7 +115,7 @@ def phys_plot(
             x_err=None
             y_err=None
             label=None
-            param = None
+            param = p0
             param_cov = None
             x_continuous = None
             R_square = None
@@ -124,32 +129,44 @@ def phys_plot(
                 label = labels(data_set)
             
             if fitting_function is not None:
+                
                 x_fit = np.array([x_val for x_val in x if truncate == None or truncate(x_val)==True])
                 y_fit = np.array([y_val for x_val,y_val in zip(x,y) if  truncate == None or truncate(x_val)==True])
-                param,param_cov = get_regression_result(x_fit,y_fit,fitting_function,p0)
-                x_continuous = np.linspace(min(x_fit),max(x_fit),50)
+
+                if p0_function is not None:
+                    param = p0_function(x_fit, y_fit)
                 
+                if rough_fitting_functions is not None:
+                    for rough_fitting_function, param_function in zip(rough_fitting_functions, fitting_param_query):
+                        param,_ = get_regression_result(x_fit, y_fit, rough_fitting_function,param,1000)
+                        if param_function is not None:
+                            param = param_function(param)
+
+                
+                param,param_cov = get_regression_result(x_fit,y_fit,fitting_function,param)
+                x_continuous = np.linspace(min(x),max(x),500)
                 residuals = y_fit - fitting_function(x_fit,*param)
                 ss_res = np.sum(residuals**2)
                 ss_tot = np.sum((y_fit-np.mean(y_fit))**2)
                 R_square= 1-ss_res/ss_tot
+                
             
             
             plot_list.append(Plot_element(x,y,fmts[len(plot_list)],x_err=x_err,y_err=y_err,label=label,param=param,param_cov=param_cov,x_continuous = x_continuous, R_square = R_square))
-            
-    
+
     if len(plot_list) == 0:
         return None
     
     if export_param_statics is not None:
-        table_element = "& " * (len(p0)+2) +"\\\\ \hline \n"
-    
+        table_element = "& " * (len(param)+2) +"\\\\ \hline \n"
+        
     
     for plot_element, fmt in zip(plot_list,fmts):
         x, y, fmt, x_err, y_err, label, param, x_continuous = plot_element.get_coef()
-        
+       
         ax.errorbar(x,y,fmt=fmt,xerr = x_err,yerr = y_err, label =label)
         if param is not None:
+            
             ax.plot(x_continuous,fitting_function(x_continuous,*param),'r-')
         
         if export_param_statics is not None:
@@ -196,14 +213,14 @@ def dictionary_boolean(
     return True
 
 def get_regression_result(
-    x,y,fitting_function, p0
+    x,y,fitting_function, p0, maxfev = 100000
 ):
     param, param_covariance=opt.curve_fit(
         fitting_function,
         x,
         y,
         p0,
-        maxfev=60000
+        maxfev= maxfev
     )
 
     return param,param_covariance
