@@ -60,7 +60,7 @@ class Plot_element:
         table = self.label + "& "
         
         for p,perr in zip(self.param, np.diag(self.param_cov)):
-            table = table + f"{p} \pm {perr}" + "& "
+            table = table + f"${p} \pm {perr}$" + "& "
         
         table = table + f"{self.R_square}" + "\\\\ \hline \n"
         

@@ -324,7 +324,7 @@ for align in range(1,7):
     for exp_type in ['double_slit']:
         d = 2.7*1e-6
         a = 5*1e-7
-        laser_raw_fig = spi.phys_plot(
+        laser_modified_fig = spi.phys_plot(
             data_set_list,
             lambda x: x.parameters,
             lambda x: x.results[0],
@@ -341,7 +341,7 @@ for align in range(1,7):
         )
         
         try:
-            laser_raw_fig.savefig(f"./results/laser({align}_{exp_type})_modified_fig.png")
+            laser_modified_fig.savefig(f"./results/laser({align}_{exp_type})_modified_fig.png")
         except AttributeError:
             continue
             
@@ -349,7 +349,7 @@ for align in range(1,7):
 for align in range(1,7):
     for exp_type in ['R_single_slit', 'L_single_slit']:
 
-        laser_raw_fig = spi.phys_plot(
+        laser_modified_fig = spi.phys_plot(
             data_set_list,
             lambda x: x.parameters,
             lambda x: x.results[0],
@@ -366,6 +366,6 @@ for align in range(1,7):
         )
         
         try:
-            laser_raw_fig.savefig(f"./results/laser({align}_{exp_type})_modified_fig.png")
+            laser_modified_fig.savefig(f"./results/laser({align}_{exp_type})_modified_fig.png")
         except AttributeError:
             continue
