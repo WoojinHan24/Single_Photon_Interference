@@ -203,6 +203,7 @@ By using this method, I can fit an enormous amount of data points without wastin
 Every code is uploaded in \cite{github}.
 
 \section{Methods}
+\label{methods: start}
 Apparatus: PMT, PCIT, Oscilloscope, Slits (\cite{spi_spec}).
 The slit spacing and its width are published as Fig. \ref{fig: slit_specs_data}.
 The laser wavelength is $670 \pm 20 [nm]$, and the bulb interference filter transfers $546 \pm 10 [nm]$ wavelength light in the Lorentzian profile.
@@ -251,7 +252,7 @@ The data are measured in distance intervals of $0.0025 [cm]$, for $0 - 7 [cm]$. 
 
 
 \subsection{PMT Threshold}
-The PMT have two parameters to control, High Voltage(HV) and the Threshold.
+The PMT has two parameters to control, High Voltage(HV) and the Threshold.
 If the HV is too high, the PMT will amplify the dark noise signal into a visible photon signal, which must be avoided.
 Besides, if the HV is too low, the PMT will not detect the photon signal and the module have a bad resolution.
 The threshold parameter is just the same as negative PMT modulation.
@@ -271,6 +272,32 @@ For each alignment number, I varied the experiment type in the double, and singl
 The data are measured 7 times in each position in distance intervals of $0.005 [cm]$, for $0 - 7 [cm]$, about 1500 data points are gathered in each experiment type and bulb intensity.
 
 \section{Results and Discussion}
+The total codes and raw data of each parameter are uploaded to GitHub.
+(\cite{github}, \url{https://github.com/WoojinHan24/Single_Photon_Interference}).
+To clarify the file name and its content in \verb|./results/|, the appendix is shown in Fig. \ref{fig: file_appendix}.
+The Python code only to run is \verb|main.py|, which imports \verb|single_photon_interference| module, fully generating the results folder itself.
+
+\begin{figure}[H]
+    \begin{tabular}{  m{5.2cm} | m{8.7cm} } 
+
+      file name& details \\ 
+      \hline
+      \hline
+        spi raw data.xlsx & The raw data of whole experiment\\
+      \hline
+        laser(x y) raw fig.png & ACF plots of alignment number x, experiment type y\\
+      \hline
+        laser(x y) raw param statics.txt & ACF parameter results in alignment number x, experiment type y\\
+      \hline
+        laser(x y) modified fig.png & LBF plots of alignment number x, experiment type y\\
+      \hline
+        laser(x y) param statics.txt & LBF parameter results in alignment number x, experiment type y
+    \end{tabular}
+    \caption{file appendix of \cite{github}}
+    \label{fig: file_appendix}
+\end{figure}
+
+Each subsection is labeled just as same with subsection from \ref{methods: start} respectively.
 \subsection{Laser Experiment}
 
 \subsection{PMT Threshold}
