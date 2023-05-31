@@ -287,11 +287,11 @@ The Python code only to run is \verb|main.py|, which imports \verb|single_photon
       \hline
         laser(x y) raw fig.png & ACF plots of alignment number x, experiment type y\\
       \hline
-        laser(x y) raw param statics.txt & ACF parameter results in alignment number x, experiment type y\\
+        laser x raw param statics.txt & ACF parameter results in experiment type x\\
       \hline
         laser(x y) modified fig.png & LBF plots of alignment number x, experiment type y\\
       \hline
-        laser(x y) param statics.txt & LBF parameter results in alignment number x, experiment type y
+        laser x param statics.txt & LBF parameter results in experiment type x
     \end{tabular}
     \caption{file appendix of \cite{github}}
     \label{fig: file_appendix}
@@ -299,6 +299,10 @@ The Python code only to run is \verb|main.py|, which imports \verb|single_photon
 
 Each subsection is labeled just as same with subsection from \ref{methods: start} respectively.
 \subsection{Laser Experiment}
+6 different alignment is tried.
+The first 3 of the experiment have $0.7 cm$ truncate issues, so the single slit experiment was not performed.
+Slit number 
+
 
 \subsection{PMT Threshold}
 

@@ -5,13 +5,14 @@ from scipy.constants import pi
 import pandas as pd
 import pickle
 import re
+import os.path
 import warnings
 
 
 warnings.filterwarnings(action='ignore')
 
 
-experiments = ['laser_experiments', 'PMT_upper_boundary','PMT_lower_boundary','Thershold_validity','Sensor_slit_position','single_photon_interference']
+experiments = ['laser_experiments', 'PMT_upper_boundary','PMT_lower_boundary','Threshold_validity','Sensor_slit_position','single_photon_interference']
 
 try:
     with open("datum.pkl","rb") as f:
@@ -112,7 +113,7 @@ except FileNotFoundError:
             datum[experiment].append(data_set)
         
         elif 'Threshold' == sheet:
-            experiment = 'Thershold_validity'
+            experiment = 'Threshold_validity'
 
             column_dic = dataframe.columns
             data_parameter = [674,0.8]
@@ -164,9 +165,9 @@ except FileNotFoundError:
     with open("./datum.pkl", "wb") as f:
         pickle.dump(datum,f)
 
+wavelength = 670*1e-9
+L=0.4981
 
-experiment = 'laser_experiments'
-data_set_list = datum[experiment]
 #for data_set in data_set_list:
 #    data_set.print_data()
 # s_l value is the FWHM/wavelength value. which di's both share
@@ -267,15 +268,15 @@ def laser_double_slit_param_setting(
     return [c,I,d1,d2,I]
 
 
-
-wavelength = 689.7*1e-9
-L=0.33
-
+experiment = 'laser_experiments'
+data_set_list = datum[experiment]
 
 for align in range(1,7):
     for exp_type in ['double_slit']:
-        d = 2.7*1e-6
-        a = 5*1e-7
+        fig_file_name=f"./results/laser({align}_{exp_type})_raw_fig.png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
+
         laser_raw_fig = spi.phys_plot(
             data_set_list,
             lambda x: x.parameters,
@@ -288,17 +289,21 @@ for align in range(1,7):
             rough_fitting_functions = [double_slit_rough_fitting_function,double_slit_fitting_function],
             p0_function = laser_double_slit_param_setting,
             truncate = lambda x: True if x<0.7 else False,
-            export_param_statics = f"./results/laser({align}_{exp_type})_raw_param_statics.txt"
+            export_param_statics = f"./results/laser_double_raw_param_statics.txt"
         )
         
         try:
-            laser_raw_fig.savefig(f"./results/laser({align}_{exp_type})_raw_fig.png")
+            laser_raw_fig.savefig(fig_file_name)
         except AttributeError:
             continue
             
 
 for align in range(1,7):
     for exp_type in ['R_single_slit', 'L_single_slit']:
+        fig_file_name=f"./results/laser({align}_{exp_type})_raw_fig.png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
+
         laser_raw_fig = spi.phys_plot(
             data_set_list,
             lambda x: x.parameters,
@@ -311,19 +316,21 @@ for align in range(1,7):
             rough_fitting_functions = [single_slit_rough_fitting_function],
             p0 = [0.36,505,0.49],
             truncate = lambda x: True if x<0.8 else False,
-            export_param_statics = f"./results/laser({align}_{exp_type})_raw_param_statics.txt"
+            export_param_statics = f"./results/laser_single_raw_param_statics.txt"
         )
         
         try:
-            laser_raw_fig.savefig(f"./results/laser({align}_{exp_type})_raw_fig.png")
+            laser_raw_fig.savefig(fig_file_name)
         except AttributeError:
             continue
 
 
 for align in range(1,7):
     for exp_type in ['double_slit']:
-        d = 2.7*1e-6
-        a = 5*1e-7
+        fig_file_name=f"./results/laser({align}_{exp_type})_modified_fig.png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
+
         laser_modified_fig = spi.phys_plot(
             data_set_list,
             lambda x: x.parameters,
@@ -337,17 +344,20 @@ for align in range(1,7):
             fitting_param_query = [None,lambda x: [*x[:4],1e-2]],
             p0_function = laser_double_slit_param_setting,
             truncate = lambda x: True if x<0.7 else False,
-            export_param_statics = f"./results/laser({align}_{exp_type})_param_statics.txt"
+            export_param_statics = f"./results/laser_double_param_statics.txt"
         )
         
         try:
-            laser_modified_fig.savefig(f"./results/laser({align}_{exp_type})_modified_fig.png")
+            laser_modified_fig.savefig(fig_file_name)
         except AttributeError:
             continue
             
 
 for align in range(1,7):
     for exp_type in ['R_single_slit', 'L_single_slit']:
+        fig_file_name=f"./results/laser({align}_{exp_type})_modified_fig.png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
 
         laser_modified_fig = spi.phys_plot(
             data_set_list,
@@ -362,10 +372,161 @@ for align in range(1,7):
             fitting_param_query = [None,lambda x: [*x,0.01]],
             p0 = [0.36,505,0.49],
             truncate = lambda x: True if x<0.8 else False,
-            export_param_statics = f"./results/laser({align}_{exp_type})_param_statics.txt"
+            export_param_statics = f"./results/laser_single_param_statics.txt"
         )
         
         try:
-            laser_modified_fig.savefig(f"./results/laser({align}_{exp_type})_modified_fig.png")
+            laser_modified_fig.savefig(fig_file_name)
         except AttributeError:
             continue
+
+experiment = 'PMT_upper_boundary'
+data_set_list = datum[experiment]
+
+
+for threshold in [0.0, 18.4]:
+        fig_file_name=f"./results/PMT_upper_boundary_({threshold}).png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
+
+        PMT_upper_boundary_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: sum(x.results)/len(x.results),
+            {'threshold [mV]' : threshold},
+            x_label = "High Voltage [V]",
+            y_label = "PCIT",
+            labels = lambda x: f"Threshold = {x.align_condition['threshold [mV]']}",
+            fitting_function= lambda x, a,b: a*np.exp(b*x),
+            p0 = [1,1e-3],
+            error_y =lambda x: 2*np.std(x.results),
+            export_param_statics = f"./results/PMT_upper_boundary_statics.txt"
+        )
+
+        try:
+            PMT_upper_boundary_fig.savefig(fig_file_name)
+        except AttributeError:
+            continue
+
+experiment = 'PMT_lower_boundary'
+data_set_list = datum[experiment]
+
+for threshold in [0.0,18.4]:
+    for bulb in [1,2,3,4,5]:
+        fig_file_name=f"./results/PMT_lower_boundary_({threshold}, {bulb}).png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
+
+        PMT_upper_boundary_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: sum(x.results)/len(x.results),
+            {'threshold [mV]' : threshold, 'bulb' : bulb},
+            x_label = "High Voltage [V]",
+            y_label = "PCIT",
+            labels = lambda x: f"Threshold = {x.align_condition['threshold [mV]']}, bulb = {x.align_condition['bulb']}",
+            fitting_function= lambda x, a,b: a*np.exp(b*x),
+            p0 = [1,1e-3],
+            error_y =lambda x: 2*np.std(x.results),
+            export_param_statics = f"./results/PMT_lower_boundary_statics.txt"
+        )
+
+        try:
+            PMT_upper_boundary_fig.savefig(fig_file_name)
+        except AttributeError:
+            continue
+
+experiment = 'Sensor_slit_position'
+data_set_list = datum[experiment]
+
+
+for bulb in [3,4,5]:
+    fig_file_name=f"./results/sensor_slit_position_({bulb}).png"
+    if os.path.isfile(fig_file_name) == True:
+        continue
+
+    sensor_slit_fig = spi.phys_plot(
+        data_set_list,
+        lambda x: x.parameters,
+        lambda x: sum(x.results)/len(x.results),
+        {'bulb' : bulb},
+        x_label = "High Voltage [V]",
+        y_label = "PCIT",
+        fitting_function = lambda x,A,m,s: A*np.exp(-(x-m)**2/s**2/2),
+        p0=[500,0.5,0.3],
+        labels = lambda x: f"bulb = {x.align_condition['bulb']}",
+        error_y =lambda x: 2*np.std(x.results),
+        export_param_statics = f"./results/sensor_slit_statics.txt"
+    )
+
+    try:
+        sensor_slit_fig.savefig(fig_file_name)
+    except AttributeError:
+        continue
+
+experiment = 'single_photon_interference'
+data_set_list = datum[experiment]
+
+# for data_set in data_set_list:
+#     data_set.print_data()
+
+zero_val = 8.6
+zero_err = 3.235
+
+for bulb in [3,4,5]:
+    for exp_type in ['double_slit']:
+        for slit in [14,15,16]:
+            fig_file_name=f"./results/bulb({bulb}_{exp_type}_{slit})_raw_fig.png"
+            if os.path.isfile(fig_file_name) == True:
+                continue
+
+
+            bulb_raw_fig = spi.phys_plot(
+                data_set_list,
+                lambda x: x.parameters,
+                lambda x: sum(x.results)/len(x.results) -zero_val,
+                {'bulb' : bulb, 'exp_type' : exp_type, 'slit' : slit},
+                x_label = "position [cm]",
+                y_label = "PCIT",
+                labels = lambda x: f"I={x.align_condition['bulb']}_"+f"Slit No. {x.align_condition['slit']}",
+                fitting_function= double_slit_asymmetry_fitting_function,
+                rough_fitting_functions = [double_slit_rough_fitting_function,double_slit_fitting_function],
+                p0_function = laser_double_slit_param_setting,
+                truncate = lambda x: True if x<0.7 else False,
+                error_y =lambda x: np.sqrt(np.std(x.results)**2 + zero_err**2),
+                export_param_statics = f"./results/bulb_double_raw_param_statics.txt"
+            )
+            
+            try:
+                bulb_raw_fig.savefig(fig_file_name)
+            except AttributeError:
+                continue
+
+
+for bulb in [3,4,5]:
+    for exp_type in ['R_single_slit', 'L_single_slit']:
+        for slit in [14,15,16]:
+            fig_file_name=f"./results/bulb({bulb}_{exp_type}_{slit})_raw_fig.png"
+            if os.path.isfile(fig_file_name) == True:
+                continue
+
+            bulb_raw_fig = spi.phys_plot(
+                data_set_list,
+                lambda x: x.parameters,
+                lambda x: sum(x.results)/len(x.results)-zero_val,
+                {'bulb' : bulb, 'exp_type' : exp_type, 'slit' : slit},
+                x_label = "position [cm]",
+                y_label = "PCIT",
+                labels = lambda x: f"I={x.align_condition['bulb']}_" +f"Slit No. {x.align_condition['slit']}",
+                fitting_function=single_slit_fitting_function,
+                rough_fitting_functions = [single_slit_rough_fitting_function],
+                p0 = [0.36,20,0.49],
+                truncate = lambda x: True if x<0.7 else False,
+                error_y =lambda x: np.sqrt(np.std(x.results)**2 + zero_err**2),
+                export_param_statics = f"./results/bulb_single_raw_param_statics.txt"
+            )
+            
+            try:
+                bulb_raw_fig.savefig(fig_file_name)
+            except AttributeError:
+                continue

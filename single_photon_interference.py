@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.optimize as opt
+import os.path
+
 
 class Data:
 
@@ -60,12 +62,16 @@ class Plot_element:
         table = self.label + "& "
         
         for p,perr in zip(self.param, np.diag(self.param_cov)):
-            table = table + f"${p} \pm {perr}$" + "& "
+            table = table + f"${round_sig(p,4)} \pm {round_sig(perr,4)}$" + "& "
         
-        table = table + f"{self.R_square}" + "\\\\ \hline \n"
+        table = table + f"{round_sig(self.R_square,4)}" + "\\\\ \hline \n"
         
         return table
 
+def round_sig(
+    x, sig
+):
+    return round(x,sig-int(np.floor(np.log10(abs(x))))-1)
 
 
 def phys_plot(
@@ -110,6 +116,7 @@ def phys_plot(
     plot_list = []    
     for data_set in data_set_list:
         if dictionary_boolean(data_set.align_condition,selection) == True:
+            
             x=[x_function(data) for data in data_set.data_list]
             y=[y_function(data) for data in data_set.data_list]
             x_err=None
@@ -151,14 +158,16 @@ def phys_plot(
                 R_square= 1-ss_res/ss_tot
                 
             
-            
             plot_list.append(Plot_element(x,y,fmts[len(plot_list)],x_err=x_err,y_err=y_err,label=label,param=param,param_cov=param_cov,x_continuous = x_continuous, R_square = R_square))
 
     if len(plot_list) == 0:
         return None
     
+    table_element = ""
     if export_param_statics is not None:
-        table_element = "& " * (len(param)+2) +"\\\\ \hline \n"
+        if os.path.isfile(export_param_statics) == False:
+
+            table_element = "& " * (len(param)+2) +"\\\\ \hline \n"
         
     
     for plot_element, fmt in zip(plot_list,fmts):
@@ -173,7 +182,7 @@ def phys_plot(
             table_element = table_element + plot_element.get_param_statics()
     
     if export_param_statics is not None:
-        with open(export_param_statics,'w') as f:
+        with open(export_param_statics,'a') as f:
             f.write(table_element)
         
         
@@ -207,8 +216,7 @@ def dictionary_boolean(
             if dic1[key] != dic2[key]:
                 return False
         except KeyError:
-            print("Unexpected key from dict boolean")
-            return KeyError
+            raise KeyError("Unexpected key from dict boolean\n", dic1, dic2)
     
     return True
 
