@@ -54,7 +54,7 @@ Secondly, the data points are tightly measured for high trust in the results.
 \subsection{Fitting Functions: Statistical Verification}
 \label{intro: statistical_setup_fitting_method}
  The results take the form of two different experimental values, the detector voltage in the laser experiment, and the pulse count data in the single photon limit experiment.
- The natural error of each value is explained at \ref{results: PMT}.
+ Firstly, the laser experiment analysis method is described.
  The slit has three different significant values to affect the interference pattern.
  As Fig. \ref{fig: slit_specs}, $\sigma_{1,2}$, the slit width of right, and left in sight of align each respectively. $\Delta$, the distance between two slits.
  For convenient naming to fitting variables, I name the slit specification parameters in the Greek alphabet.
@@ -135,8 +135,6 @@ Secondly, the data points are tightly measured for high trust in the results.
  In the fitting of single photon limits, I may check the $1\sigma$ boundary of multiple experiment results, to check the reliability of the fitting method.
 
 
-
-
  The nonvanishing problem may also be explained by the rejection of the Fraunhofer approximation.
  Those two slit intensities may differ for the distance between two optical routes.
  But this opinion is simply neglected by the precision of this experiment.
@@ -151,11 +149,11 @@ Secondly, the data points are tightly measured for high trust in the results.
  The parameter $c, I,d_i$ must have similar values since they have the physical backgrounds of slit specification.
  If the parameters are significantly different of $2 \sigma$, a p-value of 0.05, I avoid using the fitted results.
  To help the statistical verification, a specially built module is informed at \ref{intro: data analysis}.
- 
+
 
  \subsection{Data Analysis Module}
 \label{intro: data analysis}
- To fit in various functions, the codes are too messy in dealing with data sets.
+ To fit various functions, the codes are too messy in dealing with data sets.
  Also, the fitting parameters are too many to optimize in strange local minima lots of times.
  The modulation of the initial parameters is not good enough to try in many data sets.
  Therefore, I made the module of fitting and plotting.
@@ -197,7 +195,6 @@ Secondly, the data points are tightly measured for high trust in the results.
         \centering
         & & &  \\ \hline 
         1double slit 1& $0.234\pm 1.54e-08$& $0.042\pm 6.522e-06$& 0.9920
-
     \end{tabular}
     \caption{example output of phys plot method}
     \label{fig: tabular example}
@@ -205,19 +202,86 @@ Secondly, the data points are tightly measured for high trust in the results.
 By using this method, I can fit an enormous amount of data points without wasting time setting initial parameters, or writing the parameters down in the report.
 Every code is uploaded in \cite{github}.
 
-
-
 \section{Methods}
+Apparatus: PMT, PCIT, Oscilloscope, Slits (\cite{spi_spec}).
+The slit spacing and its width are published as Fig. \ref{fig: slit_specs_data}.
+The laser wavelength is $670 \pm 20 [nm]$, and the bulb interference filter transfers $546 \pm 10 [nm]$ wavelength light in the Lorentzian profile.
+The U channel is the main passage of the light, transferring the single slit, double slit, blocker and detector slit in order.
+The distance parameter $L, L_0, L_1$ is shown in Fig. \ref{fig: u_channel_specs}, the distance from the double slit to the detector, the distance between the single slit and the double slit, the width between the double slit and the blocker respectively.
+$L = 49.81 [cm]$, $L_0 = 32.50 [cm]$, and $L_1 = 0.70 [cm]$ is the measured data of the U channel.
+
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{  |m{2cm} | m{2.5cm} | m{2.5cm} | m{2.5cm}|  } 
+      \hline
+      Slit No.& $\Delta [mm]$& $\sigma_1 [mm]$ & $\sigma_2 [mm]$ \\ 
+      \hline
+      \hline
+        14 & $ 0.35 \pm 0.01$& $0.09 \pm 0.01$ & $0.09 \pm 0.01$\\
+      \hline
+        15 & $ 0.40 \pm 0.01 $& $0.09 \pm 0.01$ & $0.09 \pm 0.01$\\
+      \hline
+       16 &$ 0.45 \pm 0.01 $& $0.09 \pm 0.01$ & $0.09 \pm 0.01$\\
+       \hline
+
+    \end{tabular}
+    \caption{Published slit specification data}
+    \label{fig: slit_specs_data}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=13cm]{../results/u_channel_spec.png}
+    \hfill
+    \caption{
+        Schematic model of U Channel, the laser alignment is represented in the red line, and each slit is plotted in a small box.
+        The term left and right definition is also shown.
+    }
+    \label{fig: u_channel_specs}
+\end{figure}
+ 
+\subsection{Laser Experiment}
+The multi-photon limit experiment uses the laser as a light source.
+The align is fixed for the total measurement, but can not be regenerated.
+Therefore, I label the experiment set as aligned number and experiment type.
+For each alignment trial, the experiment has done in the double slit, right single slit, and left single slit using a blocker.
+For example, in alignment number 1, the double-slit data and the single-slit data are measured.
+A total of six alignments are done, in diverse slit conditions.
+The data are measured in distance intervals of $0.0025 [cm]$, for $0 - 7 [cm]$. about 300 data points are measured for each experiment type.
+
+
+\subsection{PMT Threshold}
+The PMT have two parameters to control, High Voltage(HV) and the Threshold.
+If the HV is too high, the PMT will amplify the dark noise signal into a visible photon signal, which must be avoided.
+Besides, if the HV is too low, the PMT will not detect the photon signal and the module have a bad resolution.
+The threshold parameter is just the same as negative PMT modulation.
+Properly setting the threshold parameter to make PCIT variance low, and setting HV appropriate to the threshold is necessary.
+The PMT HV lower boundary is measured in bright conditions.
+If the PCIT measurement is not enough visible in the PMT even in the brightest setting, the HV value is not valid.
+Also, the PMT HV upper boundary is measured in dark conditions.
+If the PCIT measurement is too excited in the PMT even in dark moments, the HV value is not valid.
+I have measured 7 times each in 25 different HV values for two different threshold parameter settings.
+And the final setting $(HV) = 720 [V], (threshold) = 18.4 [mV]$ has been double-checked with oscilloscope data.
+
+\subsection{Bulb Experiment: Single Photon Limit}
+The single-photon limit experiment uses the bulb as a light source.
+The alignment is also fixed for the total measurement.
+I label the experiment as the aligned number and experiment type and bulb intensity.
+For each alignment number, I varied the experiment type in the double, and single slits, and the bulb intensity to 5 from 3, in various slit numbers.
+The data are measured 7 times in each position in distance intervals of $0.005 [cm]$, for $0 - 7 [cm]$, about 1500 data points are gathered in each experiment type and bulb intensity.
 
 \section{Results and Discussion}
-\subsection{}
-\label{results: PMT}
+\subsection{Laser Experiment}
+
+\subsection{PMT Threshold}
+
+\subsection{Bulb Experiment: Single Photon Limit}
 
 \section{Summary}
 
 
 
-\cite{abcd}
+
 \bibliography{single_photon_interference_ref}
 \bibliographystyle{plain}
 \end{document}
