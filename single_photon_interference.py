@@ -172,7 +172,7 @@ def phys_plot(
     
     for plot_element, fmt in zip(plot_list,fmts):
         x, y, fmt, x_err, y_err, label, param, x_continuous = plot_element.get_coef()
-       
+
         ax.errorbar(x,y,fmt=fmt,xerr = x_err,yerr = y_err, label =label)
         if param is not None:
             
