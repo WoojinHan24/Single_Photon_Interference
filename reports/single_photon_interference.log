@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  1 JUN 2023 15:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.3.23)  1 JUN 2023 18:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -418,129 +418,183 @@ Package gensymb Info: Using \textmu for \micro on input line 32.
 <../results/slit_specs.png, id=54, 191.21437pt x 207.77625pt>
 File: ../results/slit_specs.png Graphic file (type png)
 <use ../results/slit_specs.png>
-Package pdftex.def Info: ../results/slit_specs.png  used on input line 67.
+Package pdftex.def Info: ../results/slit_specs.png  used on input line 75.
 (pdftex.def)             Requested size: 85.35826pt x 92.75021pt.
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <../results/slit_specs.png>] [2]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 165.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <../results/slit_specs.png>]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 173.
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 ) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 ) [3]
-<../results/u_channel_spec.png, id=124, 849.67438pt x 230.8625pt>
+<../results/u_channel_spec.png, id=121, 849.67438pt x 230.8625pt>
 File: ../results/u_channel_spec.png Graphic file (type png)
 <use ../results/u_channel_spec.png>
-Package pdftex.def Info: ../results/u_channel_spec.png  used on input line 237.
+Package pdftex.def Info: ../results/u_channel_spec.png  used on input line 245.
 (pdftex.def)             Requested size: 369.88582pt x 100.50186pt.
  [4 <../results/u_channel_spec.png>] [5]
 <../results/laser(6_double_slit)_modified_fig.png, id=150, 578.16pt x 289.08pt>
 File: ../results/laser(6_double_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(6_double_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(6_double_slit)_modified_fig.png  used on input line 348.
+Package pdftex.def Info: ../results/laser(6_double_slit)_modified_fig.png  used on input line 357.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
 <../results/laser(6_R_single_slit)_modified_fig.png, id=151, 578.16pt x 289.08pt>
 File: ../results/laser(6_R_single_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(6_R_single_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(6_R_single_slit)_modified_fig.png  used on input line 354.
+Package pdftex.def Info: ../results/laser(6_R_single_slit)_modified_fig.png  used on input line 363.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
 <../results/laser(6_L_single_slit)_modified_fig.png, id=152, 578.16pt x 289.08pt>
 File: ../results/laser(6_L_single_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(6_L_single_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(6_L_single_slit)_modified_fig.png  used on input line 361.
+Package pdftex.def Info: ../results/laser(6_L_single_slit)_modified_fig.png  used on input line 370.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
-<../results/laser(4_double_slit)_modified_fig.png, id=159, 578.16pt x 289.08pt>
+ [6]
+<../results/laser(4_double_slit)_modified_fig.png, id=167, 578.16pt x 289.08pt>
 File: ../results/laser(4_double_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(4_double_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(4_double_slit)_modified_fig.png  used on input line 390.
+Package pdftex.def Info: ../results/laser(4_double_slit)_modified_fig.png  used on input line 399.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
-<../results/laser(4_R_single_slit)_modified_fig.png, id=160, 578.16pt x 289.08pt>
+<../results/laser(4_R_single_slit)_modified_fig.png, id=168, 578.16pt x 289.08pt>
 File: ../results/laser(4_R_single_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(4_R_single_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(4_R_single_slit)_modified_fig.png  used on input line 396.
+Package pdftex.def Info: ../results/laser(4_R_single_slit)_modified_fig.png  used on input line 405.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
-<../results/laser(4_L_single_slit)_modified_fig.png, id=161, 578.16pt x 289.08pt>
+<../results/laser(4_L_single_slit)_modified_fig.png, id=169, 578.16pt x 289.08pt>
 File: ../results/laser(4_L_single_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(4_L_single_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(4_L_single_slit)_modified_fig.png  used on input line 403.
+Package pdftex.def Info: ../results/laser(4_L_single_slit)_modified_fig.png  used on input line 412.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
- [6 <../results/laser(6_double_slit)_modified_fig.png> <../results/laser(6_R_single_slit)_modified_fig.png> <../results/laser(6_L_single_slit)_modified_fig.png>]
-<../results/laser(5_double_slit)_modified_fig.png, id=179, 578.16pt x 289.08pt>
+ [7 <../results/laser(6_double_slit)_modified_fig.png> <../results/laser(6_R_single_slit)_modified_fig.png> <../results/laser(6_L_single_slit)_modified_fig.png>]
+<../results/laser(5_double_slit)_modified_fig.png, id=184, 578.16pt x 289.08pt>
 File: ../results/laser(5_double_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(5_double_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(5_double_slit)_modified_fig.png  used on input line 427.
+Package pdftex.def Info: ../results/laser(5_double_slit)_modified_fig.png  used on input line 436.
 (pdftex.def)             Requested size: 170.71652pt x 85.35725pt.
-<../results/laser(5_R_single_slit)_modified_fig.png, id=180, 578.16pt x 289.08pt>
+<../results/laser(5_R_single_slit)_modified_fig.png, id=185, 578.16pt x 289.08pt>
 File: ../results/laser(5_R_single_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(5_R_single_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(5_R_single_slit)_modified_fig.png  used on input line 433.
+Package pdftex.def Info: ../results/laser(5_R_single_slit)_modified_fig.png  used on input line 442.
 (pdftex.def)             Requested size: 170.71652pt x 85.35725pt.
-<../results/laser(5_L_single_slit)_modified_fig.png, id=181, 578.16pt x 289.08pt>
+<../results/laser(5_L_single_slit)_modified_fig.png, id=186, 578.16pt x 289.08pt>
 File: ../results/laser(5_L_single_slit)_modified_fig.png Graphic file (type png)
 <use ../results/laser(5_L_single_slit)_modified_fig.png>
-Package pdftex.def Info: ../results/laser(5_L_single_slit)_modified_fig.png  used on input line 440.
+Package pdftex.def Info: ../results/laser(5_L_single_slit)_modified_fig.png  used on input line 449.
 (pdftex.def)             Requested size: 170.71652pt x 85.35725pt.
- [7 <../results/laser(4_double_slit)_modified_fig.png> <../results/laser(4_R_single_slit)_modified_fig.png> <../results/laser(4_L_single_slit)_modified_fig.png> <../results/laser(5_double_slit)_modified_fig.png> <../results/laser(5_R_single_slit)_modified_fig.png> <../results/laser(5_L_single_slit)_modified_fig.png>]
-<../results/laser_wavelength_dispersion.png, id=199, 289.08pt x 289.08pt>
+ [8 <../results/laser(4_double_slit)_modified_fig.png> <../results/laser(4_R_single_slit)_modified_fig.png> <../results/laser(4_L_single_slit)_modified_fig.png> <../results/laser(5_double_slit)_modified_fig.png> <../results/laser(5_R_single_slit)_modified_fig.png> <../results/laser(5_L_single_slit)_modified_fig.png>]
+<../results/laser_wavelength_dispersion.png, id=203, 289.08pt x 289.08pt>
 File: ../results/laser_wavelength_dispersion.png Graphic file (type png)
 <use ../results/laser_wavelength_dispersion.png>
-Package pdftex.def Info: ../results/laser_wavelength_dispersion.png  used on input line 517.
+Package pdftex.def Info: ../results/laser_wavelength_dispersion.png  used on input line 526.
 (pdftex.def)             Requested size: 199.16928pt x 199.16986pt.
- [8]
-<../results/PMT_upper_boundary_(0.0).png, id=209, 361.35pt x 289.08pt>
+ [9]
+<../results/PMT_upper_boundary_(0.0).png, id=213, 361.35pt x 289.08pt>
 File: ../results/PMT_upper_boundary_(0.0).png Graphic file (type png)
 <use ../results/PMT_upper_boundary_(0.0).png>
-Package pdftex.def Info: ../results/PMT_upper_boundary_(0.0).png  used on input line 534.
+Package pdftex.def Info: ../results/PMT_upper_boundary_(0.0).png  used on input line 545.
 (pdftex.def)             Requested size: 199.16928pt x 159.33412pt.
-<../results/PMT_upper_boundary_(18.4).png, id=210, 361.35pt x 289.08pt>
+<../results/PMT_upper_boundary_(18.4).png, id=214, 361.35pt x 289.08pt>
 File: ../results/PMT_upper_boundary_(18.4).png Graphic file (type png)
 <use ../results/PMT_upper_boundary_(18.4).png>
-Package pdftex.def Info: ../results/PMT_upper_boundary_(18.4).png  used on input line 540.
+Package pdftex.def Info: ../results/PMT_upper_boundary_(18.4).png  used on input line 551.
 (pdftex.def)             Requested size: 199.16928pt x 159.33412pt.
- [9 <../results/laser_wavelength_dispersion.png> <../results/PMT_upper_boundary_(0.0).png> <../results/PMT_upper_boundary_(18.4).png>]
-<../results/PMT_boundary_(0.0).png, id=225, 578.16pt x 289.08pt>
+ [10 <../results/laser_wavelength_dispersion.png> <../results/PMT_upper_boundary_(0.0).png> <../results/PMT_upper_boundary_(18.4).png>]
+<../results/PMT_boundary_(0.0).png, id=228, 578.16pt x 289.08pt>
 File: ../results/PMT_boundary_(0.0).png Graphic file (type png)
 <use ../results/PMT_boundary_(0.0).png>
-Package pdftex.def Info: ../results/PMT_boundary_(0.0).png  used on input line 573.
+Package pdftex.def Info: ../results/PMT_boundary_(0.0).png  used on input line 584.
 (pdftex.def)             Requested size: 284.52756pt x 142.26357pt.
-<../results/PMT_boundary_(18.4).png, id=226, 578.16pt x 289.08pt>
+<../results/PMT_boundary_(18.4).png, id=229, 578.16pt x 289.08pt>
 File: ../results/PMT_boundary_(18.4).png Graphic file (type png)
 <use ../results/PMT_boundary_(18.4).png>
-Package pdftex.def Info: ../results/PMT_boundary_(18.4).png  used on input line 579.
+Package pdftex.def Info: ../results/PMT_boundary_(18.4).png  used on input line 590.
 (pdftex.def)             Requested size: 284.52756pt x 142.26357pt.
-<../results/sensor_slit_position_(3).png, id=227, 578.16pt x 289.08pt>
+<../results/sensor_slit_position_(3).png, id=230, 578.16pt x 289.08pt>
 File: ../results/sensor_slit_position_(3).png Graphic file (type png)
 <use ../results/sensor_slit_position_(3).png>
-Package pdftex.def Info: ../results/sensor_slit_position_(3).png  used on input line 596.
+Package pdftex.def Info: ../results/sensor_slit_position_(3).png  used on input line 607.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
-<../results/sensor_slit_position_(4).png, id=228, 578.16pt x 289.08pt>
+<../results/sensor_slit_position_(4).png, id=231, 578.16pt x 289.08pt>
 File: ../results/sensor_slit_position_(4).png Graphic file (type png)
 <use ../results/sensor_slit_position_(4).png>
-Package pdftex.def Info: ../results/sensor_slit_position_(4).png  used on input line 602.
+Package pdftex.def Info: ../results/sensor_slit_position_(4).png  used on input line 613.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
-<../results/sensor_slit_position_(5).png, id=229, 578.16pt x 289.08pt>
+<../results/sensor_slit_position_(5).png, id=232, 578.16pt x 289.08pt>
 File: ../results/sensor_slit_position_(5).png Graphic file (type png)
 <use ../results/sensor_slit_position_(5).png>
-Package pdftex.def Info: ../results/sensor_slit_position_(5).png  used on input line 609.
+Package pdftex.def Info: ../results/sensor_slit_position_(5).png  used on input line 620.
 (pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
- [10 <../results/PMT_boundary_(0.0).png> <../results/PMT_boundary_(18.4).png>] (./single_photon_interference.bbl) [11 <../results/sensor_slit_position_(3).png> <../results/sensor_slit_position_(4).png> <../results/sensor_slit_position_(5).png>] (./single_photon_interference.aux)
+ [11 <../results/PMT_boundary_(0.0).png> <../results/PMT_boundary_(18.4).png>] [12 <../results/sensor_slit_position_(3).png> <../results/sensor_slit_position_(4).png> <../results/sensor_slit_position_(5).png>]
+<../results/bulb(14_double_slit)_fig.png, id=256, 578.16pt x 289.08pt>
+File: ../results/bulb(14_double_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(14_double_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(14_double_slit)_fig.png  used on input line 666.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+<../results/bulb(14_R_single_slit)_fig.png, id=257, 578.16pt x 289.08pt>
+File: ../results/bulb(14_R_single_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(14_R_single_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(14_R_single_slit)_fig.png  used on input line 672.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+<../results/bulb(14_L_single_slit)_fig.png, id=258, 578.16pt x 289.08pt>
+File: ../results/bulb(14_L_single_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(14_L_single_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(14_L_single_slit)_fig.png  used on input line 679.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+<../results/bulb(15_double_slit)_fig.png, id=265, 578.16pt x 289.08pt>
+File: ../results/bulb(15_double_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(15_double_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(15_double_slit)_fig.png  used on input line 720.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+<../results/bulb(15_R_single_slit)_fig.png, id=266, 578.16pt x 289.08pt>
+File: ../results/bulb(15_R_single_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(15_R_single_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(15_R_single_slit)_fig.png  used on input line 726.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+<../results/bulb(15_L_single_slit)_fig.png, id=267, 578.16pt x 289.08pt>
+File: ../results/bulb(15_L_single_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(15_L_single_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(15_L_single_slit)_fig.png  used on input line 733.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+ [13 <../results/bulb(14_double_slit)_fig.png> <../results/bulb(14_R_single_slit)_fig.png> <../results/bulb(14_L_single_slit)_fig.png>]
+<../results/bulb(16_double_slit)_fig.png, id=282, 578.16pt x 289.08pt>
+File: ../results/bulb(16_double_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(16_double_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(16_double_slit)_fig.png  used on input line 767.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+<../results/bulb(16_R_single_slit)_fig.png, id=283, 578.16pt x 289.08pt>
+File: ../results/bulb(16_R_single_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(16_R_single_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(16_R_single_slit)_fig.png  used on input line 773.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+<../results/bulb(16_L_single_slit)_fig.png, id=284, 578.16pt x 289.08pt>
+File: ../results/bulb(16_L_single_slit)_fig.png Graphic file (type png)
+<use ../results/bulb(16_L_single_slit)_fig.png>
+Package pdftex.def Info: ../results/bulb(16_L_single_slit)_fig.png  used on input line 780.
+(pdftex.def)             Requested size: 199.16928pt x 99.58272pt.
+ [14 <../results/bulb(15_double_slit)_fig.png> <../results/bulb(15_R_single_slit)_fig.png> <../results/bulb(15_L_single_slit)_fig.png>]
+<../results/bulb_wavelength_dispersion.png, id=296, 289.08pt x 289.08pt>
+File: ../results/bulb_wavelength_dispersion.png Graphic file (type png)
+<use ../results/bulb_wavelength_dispersion.png>
+Package pdftex.def Info: ../results/bulb_wavelength_dispersion.png  used on input line 836.
+(pdftex.def)             Requested size: 199.16928pt x 199.16986pt.
+ [15 <../results/bulb(16_double_slit)_fig.png> <../results/bulb(16_R_single_slit)_fig.png> <../results/bulb(16_L_single_slit)_fig.png>] (./single_photon_interference.bbl [16 <../results/bulb_wavelength_dispersion.png>]) [17] (./single_photon_interference.aux)
 Package rerunfilecheck Info: File `single_photon_interference.out' has not changed.
 (rerunfilecheck)             Checksum: 66ABFD03D22D5B8BA2DB8D0014275050;1893.
  ) 
 Here is how much of TeX's memory you used:
- 13341 strings out of 480247
- 214301 string characters out of 5896151
- 687551 words of memory out of 5000000
- 31023 multiletter control sequences out of 15000+600000
+ 13434 strings out of 478287
+ 217691 string characters out of 5849289
+ 699498 words of memory out of 5000000
+ 31344 multiletter control sequences out of 15000+600000
  483926 words of font info for 60 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 60i,12n,63p,474b,1254s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/jinjin/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on single_photon_interference.pdf (11 pages, 590071 bytes).
+ 1141 hyphenation exceptions out of 8191
+ 60i,12n,63p,515b,1254s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb>
+Output written on single_photon_interference.pdf (17 pages, 1080179 bytes).
 PDF statistics:
- 601 PDF objects out of 1000 (max. 8388607)
- 264 compressed objects within 3 object streams
- 65 named destinations out of 1000 (max. 500000)
- 192 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 427 PDF objects out of 1000 (max. 8388607)
+ 297 compressed objects within 3 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 242 words of extra memory for PDF output out of 10000 (max. 10000000)
 

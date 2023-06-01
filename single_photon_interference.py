@@ -239,7 +239,6 @@ def light_dispersion_gradient_descent(
 ):
     return_value =0
     for data_set in data_set_list:
-        
         fitting_function = fitting_function_class(data_set)
         rough_fitting_functions = rough_fitting_functions_class(data_set)
         p0 = p0_class(data_set)

@@ -542,74 +542,120 @@ data_set_list = datum[experiment]
 #     data_set.print_data()
 
 
-
-for bulb in [3,4,5]:
-    for exp_type in ['double_slit']:
-        for slit in [14,15,16]:
-            fig_file_name=f"./results/bulb({slit}_{exp_type}_{bulb})_raw_fig.png"
-            if os.path.isfile(fig_file_name) == True:
-                continue
-            
-            zero_val = 5.95
-            zero_err = 2.981
+for exp_type in ['double_slit']:
+    for slit in [14,15,16]:
+        fig_file_name=f"./results/bulb({slit}_{exp_type})_fig.png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
+        
+        zero_val = 5.95
+        zero_err = 2.981
 
 
-            bulb_raw_fig = spi.phys_plot(
-                data_set_list,
-                lambda x: x.parameters,
-                lambda x: sum(x.results)/len(x.results) -zero_val,
-                {'bulb' : bulb, 'exp_type' : exp_type, 'slit' : slit},
-                x_label = "position [cm]",
-                y_label = "PCIT",
-                labels = lambda x: f"I={x.align_condition['bulb']}_"+f"Slit No. {x.align_condition['slit']}_"+exp_type,
-                fitting_function= double_slit_asymmetry_fitting_function,
-                rough_fitting_functions = [double_slit_rough_fitting_function,double_slit_fitting_function],
-                p0_function = laser_double_slit_param_setting,
-                truncate = lambda x: True if x<0.7 else False,
-                error_y =lambda x: np.sqrt(np.std(x.results)**2 + zero_err**2),
-                export_param_statics = f"./results/bulb_double_raw_param_statics.txt"
+        bulb_raw_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: sum(x.results)/len(x.results) -zero_val,
+            {'exp_type' : exp_type, 'slit' : slit},
+            x_label = "position [cm]",
+            y_label = "PCIT",
+            labels = lambda x: f"I={x.align_condition['bulb']}_"+f"Slit No. {x.align_condition['slit']}_"+exp_type,
+            fitting_function= double_slit_modified_function,
+            rough_fitting_functions = [double_slit_rough_fitting_function,double_slit_fitting_function],
+            p0_function = laser_double_slit_param_setting,
+            fitting_param_query = [None,lambda x: [*x[:4],1e-2]],
+            truncate = lambda x: True if x<0.7 else False,
+            error_y =lambda x: np.sqrt(np.std(x.results)**2 + zero_err**2),
+            export_param_statics = f"./results/bulb_double_param_statics.txt"
+        )
+        
+        try:
+            bulb_raw_fig.savefig(fig_file_name)
+        except AttributeError:
+            continue
+
+
+
+for exp_type in ['R_single_slit', 'L_single_slit']:
+    for slit in [14,15,16]:
+    
+        fig_file_name=f"./results/bulb({slit}_{exp_type})_fig.png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
+        
+        zero_val = 5.95
+        zero_err = 2.981
+
+        rough_fitting_functions = [single_slit_rough_fitting_function,single_slit_fitting_function]
+        p0 = [0.7,70,1]
+        fitting_param_query = [None,lambda x: [*x,0.01]]
+        if exp_type == 'R_single_slit' and slit == 14:
+            rough_fitting_functions = None
+            fitting_param_query = None
+            p0 = [0.7,70,1,0.01]
+        #totally personal setting
+
+
+        bulb_raw_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: sum(x.results)/len(x.results)-zero_val,
+            {'exp_type' : exp_type, 'slit' : slit},
+            x_label = "position [cm]",
+            y_label = "PCIT",
+            labels = lambda x: f"I={x.align_condition['bulb']}_" +f"Slit No. {x.align_condition['slit']}_"+exp_type,
+            fitting_function= single_slit_modified_function,
+            rough_fitting_functions = rough_fitting_functions,
+            fitting_param_query = fitting_param_query,
+            p0 = p0,
+            truncate = lambda x: True if x<0.7 else False,
+            error_y =lambda x: np.sqrt(np.std(x.results)**2 + zero_err**2),
+            export_param_statics = f"./results/bulb_single_param_statics.txt"
+        )
+
+        
+        try:
+            bulb_raw_fig.savefig(fig_file_name)
+        except AttributeError:
+            continue
+
+#Err - \Gamma
+fig_file_name = "./results/bulb_wavelength_dispersion.png"
+zero_val = 5.95
+if os.path.isfile(fig_file_name) == False:
+    s_l_continuous = np.linspace(0,0.1,50)
+    err = []
+    min = 100
+    min_s_l = 0
+
+    for s_l in s_l_continuous:
+        print(f"{s_l} started")
+        
+        err_val = spi.light_dispersion_gradient_descent(
+                s_l = s_l,
+                data_set_list = data_set_list,
+                x_function = lambda x: x.parameters,
+                y_function = lambda x: sum(x.results)/len(x.results)-zero_val,
+                truncate = lambda x: True if x<0.8 else False,
+                fitting_function_class = lambda x: double_slit_modified_function if x.align_condition['exp_type']=='double_slit' else single_slit_modified_function,
+                rough_fitting_functions_class = lambda x: [double_slit_rough_fitting_function,double_slit_fitting_function] if  x.align_condition['exp_type']=='double_slit' else [single_slit_rough_fitting_function,single_slit_fitting_function],
+                p0_class = lambda x: laser_double_slit_param_setting if  x.align_condition['exp_type']=='double_slit' else [0.36,505,0.49],
+                fitting_param_query_class = lambda x: [None,lambda x: [*x[:4]]]if x.align_condition['exp_type']=='double_slit' else [None, None]
             )
+        if err_val < min:
+            min =err_val
+            min_s_l = s_l
+            print(s_l)
             
-            try:
-                bulb_raw_fig.savefig(fig_file_name)
-            except AttributeError:
-                continue
+        err.append(
+            err_val
+        )
 
+    fig = plt.figure(figsize = (4,4))
+    ax = fig.add_subplot(1,1,1)
 
-for bulb in [3,4,5]:
-    for exp_type in ['R_single_slit', 'L_single_slit']:
-        for slit in [14,15,16]:
-            fig_file_name=f"./results/bulb({slit}_{exp_type}_{bulb})_raw_fig.png"
-            if os.path.isfile(fig_file_name) == True:
-                continue
-            
-            zero_val = 5.95
-            zero_err = 2.981
-
-            rough_fitting_functions = [single_slit_rough_fitting_function]
-            if exp_type == 'R_single_slit' and slit == 14:
-                rough_fitting_functions = []
-            #totally personal setting
-
-
-            bulb_raw_fig = spi.phys_plot(
-                data_set_list,
-                lambda x: x.parameters,
-                lambda x: sum(x.results)/len(x.results)-zero_val,
-                {'bulb' : bulb, 'exp_type' : exp_type, 'slit' : slit},
-                x_label = "position [cm]",
-                y_label = "PCIT",
-                labels = lambda x: f"I={x.align_condition['bulb']}_" +f"Slit No. {x.align_condition['slit']}_"+exp_type,
-                fitting_function=single_slit_fitting_function,
-                rough_fitting_functions = rough_fitting_functions,
-                p0 = [0.7,70,1],
-                truncate = lambda x: True if x<0.7 else False,
-                error_y =lambda x: np.sqrt(np.std(x.results)**2 + zero_err**2),
-                export_param_statics = f"./results/bulb_single_raw_param_statics.txt"
-            )
-
-            
-            try:
-                bulb_raw_fig.savefig(fig_file_name)
-            except AttributeError:
-                continue
+    ax.plot(s_l_continuous,err, 'k-')
+    ax.set_xlabel("$\Gamma$")
+    ax.set_ylabel("Error")
+    fig.tight_layout()
+    fig.savefig(fig_file_name)

@@ -37,9 +37,16 @@
 \maketitle
 
 \begin{abstract}
-    In this experiment,
-
+  In this experiment, I suggested the statistical criteria, dependent parameters and dimensionless parameters and applied them to the interference patterns.
+  The laser and weak bulb are used for the pattern, proving that the intensity of light does not affect the significant parameters.
+  Also, the published specification of the slit is verified by the 6 different experiments.
+  The fitting method for sensible parameters is suggested.
+  The method is proved and applied to consider the wavelength dispersion of the light source, which may not be easily gathered from convolution-fitting results.
+  The wave packet size and the number counts of the photon are calculated and check the single photon limit condition.
+  Finally, the Python module for fitting, plotting, partial fitting, and convenient data manipulation is made and uploaded.
+  The fully working files and the raw data are also uploaded, the successor may download the module and use it.
 \end{abstract}
+
 \section{Introduction}
  The experiment of light interference is very significant in research of early quantum mechanics.
 The interference pattern is used to explain the wave-like nature of light, which is rejected by the photon model.
@@ -49,8 +56,9 @@ In \ref{intro: data analysis} section, I uploaded to the public the analysis mod
 Secondly, the data points are tightly measured for high trust in the results.
 
 The laser interference experiment is performed in double and single slits for each slit and is statistically verified.
-The wavelength dispersion value is suggested, and its fragile limitation is checked.
+The wavelength dispersion value in dimensionless form is suggested, and its fragile limitation is checked.
 Also, the wavelength dispersion value in clever fitting is applied and successfully matches the published specification value of the experimental tool.
+The validity check and the partial fitting method are used to prove the single-photon limit experiment results can be explained by the math used in multi-photon limits.
 
 
 \subsection{Fitting Functions: Statistical Verification}
@@ -273,6 +281,7 @@ I label the experiment as the aligned number and experiment type and bulb intens
 For each alignment number, I varied the experiment type in the double, and single slits, and the bulb intensity to 5 from 3, in various slit numbers.
 The data are measured 7 times in each position in distance intervals of $0.005 [cm]$, for $0 - 7 [cm]$, about 1500 data points are gathered in each experiment type and bulb intensity.
 
+
 \section{Results and Discussion}
 The total codes and raw data of each parameter are uploaded to GitHub.
 (\cite{github}, \url{https://github.com/WoojinHan24/Single_Photon_Interference}).
@@ -311,9 +320,9 @@ Also, the 11 alignments have been done, the listing of those values in the repor
       \hline
         sensor slit statics.txt & Fitting parameter of sensor slit position plot\\
       \hline
-        bulb($x$ y $z$) raw fig.png & PCIT ACF plots of Slit No. $x$, experiment type y, bulb intensity of $z$\\
+        bulb($x$ y) fig.png & PCIT LBF plots of Slit No. $x$, experiment type y\\
       \hline
-        bulb x raw param static.txt & ACF parameter results in experiment type x \\
+        bulb x param static.txt & LBF parameter results in experiment type x \\
 
     \end{tabular}
     \caption{file appendix of \cite{github}}
@@ -525,7 +534,9 @@ The standard error of this value is not affordable, since this fitting consumes 
 \subsection{PMT Threshold}
  The lower boundary and upper boundary of HV are required in the preset of the single photon limit experiment.
  In the dark, the unwanted PCIT occurs following equation \ref{equation: PMT}.
- The fitting result is sufficiently accurate, and the $a$ value is constant to the threshold value as the theory predicts.
+ The fitting result is sufficiently accurate in the dark condition.
+ But, in the enlighten condition the fitting quite does not work well.
+ The saturation of the amplifier might be the first reason, or the PCIT counting issue may occur cause of the fact that the time interval between peaks is too short to count.
 
  \begin{figure}[H]
   \centering
@@ -628,11 +639,233 @@ The Gaussian fitting does not give dramatic physical meaning, but the sensor sli
   \label{fig: sensor_slit_position_statics}
 \end{figure}
 
+The numerical approximation of the photon number is very important in setting a regime.
+I assume that the Dark signal in the same HV is the value of PCIT counts by one photon.
+This put its root in the simple claim, Dark signal is the result of the single excitation in the first PMT cathode.
+About 5.95 PCIT counts is a photon excitation.
+Therefore, 350, 1200, and 3000 PCIT each in the center of the screen is 50, 200, and 500 photons for bulb intensity 3, 4, and 5 respectively.
+The slit transfers the photon order of $10^{-3}$, the photon emitted by the bulb is $5 \times 10^{4} , 2 \times 10^5 , 5 \times 10^5$ per second each.
 
 \subsection{Bulb Experiment: Single Photon Limit}
+In this subsection, three slits results are plotted and fitted respectively.
+For each slit, two figures are posted.
+The first figure is the PCIT - detector position [cm] plots of nine different experiment types, the double slit, and the single slits of each side, in differ of bulb intensities 3,4, and 5.
+At each position, the PCIT counts are seven times measured for 1s, and average and standard deviation are plotted.
+The second figure is the table containing parameter statics of previous plots respectively.
+The row exp is the experiment type, all means the double slit case, and the R, L means the single slit of the right, left side.
+$c, I,d_1,d_2,\Gamma$ is the position of the center of the screen, and the center PCIT count, the proper distances, and the dispersion coefficient respectively which are defined as equation \ref{equation: modified double slit}.
+
+The pair results of Silt No. 14 are illustrated in Fig. \ref{fig: 14_bulb_plot}, \ref{fig: 14_bulb_parmeters}.
+This result is the hard evidence of my explanation in $\Gamma$ that the $\Gamma$ parameter does not vary the result a lot, the physical quantity takes a similar size with each other in $1 \sigma$.
+$c, d_1$ values are almost the same and the $I$ value ratio between bulb intensity is also similar, $1:3:7$ in rough calculation.
+These two statistical conditions verify the fitting is valid.
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{7cm}
+        \centering
+        \includegraphics[width=7cm]{../results/bulb(14_double_slit)_fig.png}
+        \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/bulb(14_R_single_slit)_fig.png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \centering
+  \begin{subfigure}[b]{7cm}
+    \centering
+    \includegraphics[width=7cm]{../results/bulb(14_L_single_slit)_fig.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+    \caption{PCIT counts - position [cm] plot of Slit No. 14, (a) double slit, (b) right side single slit, (c) left side single slit in the black dots, blue dots, and the yellow dots, bulb intensity of 3,4, and 5 each.
+        The red line is LBF fit results.
+     }
+    \label{fig: 14_bulb_plot}
+  \end{figure}
+
+\begin{figure}[H]
+    \begin{tabular}{  m{0.6cm}|m{0.3cm}|m{1.7cm}|m{1.7cm}|m{2cm}|m{2cm}|m{2cm}|m{1cm} } 
+        exp & I & c [cm]& PCIT & $d_1$ [cm] & $d_2$ [cm] & $\Gamma$ & $R^2$ \\ \hline \hline
+        \multirow{3}{*}{all}& 3 & $0.6034 $ & $75.00$& $1.063$& $0.07855$& $0.0207$& 0.9822\\ \cline{2-8}
+                            & 4 & $0.6028$& $241.3$& $1.108$& $0.0779$& $0.0614$& 0.9943\\ \cline{2-8} 
+                            & 5 & $0.6033$& $552.1$& $1.155$& $0.07815$& $0.0678 $& 0.9938\\ \hline 
+        \multirow{3}{*}{R}  & 3 & $0.6227 $& $23.57$& $0.7574$&& $0.0674 $& 0.92\\ \cline{2-8}
+                            & 4 &$0.6326$& $65.89$& $0.9232$&& $0.0000 $& 0.9809\\ \cline{2-8}
+                            & 5 &$0.6303$& $151.9$& $0.9517$&& $0.0000$& 0.9972\\ \hline
+        \multirow{3}{*}{L}  & 3 & $0.5231$& $21.26$& $0.8701$&& $0.0000$& 0.8779\\ \cline{2-8}
+                            & 4 & $0.5398$& $57.6$& $1.014 $&& $0.0364 $& 0.98\\ \cline{2-8}
+                            & 5 & $0.5408$& $136.3$& $1.045 $&& $0.0845$& 0.9914\\ \hline
+    \end{tabular}
+    \caption{Parameter statics of \ref{fig: 14_bulb_plot}, experiment results of Slit No. 14.
+     The table is too small to write all of the standard errors.
+     The errors of distance are $0.003$ [cm], and the $\Gamma$ value errors are too small in fitting covariance.
+    }
+    \label{fig: 14_bulb_parmeters}
+
+\end{figure}
+
+
+The pair results of Silt No. 15 are illustrated in Fig. \ref{fig: 15_bulb_plot}, \ref{fig: 15_bulb_parmeters}.
+The pair results of Silt No. 15 are illustrated in Fig. \ref{fig: 16_bulb_plot}, \ref{fig: 16_bulb_parmeters}.
+This result is the hard evidence of my explanation in $\Gamma$ that the $\Gamma$ parameter does not vary the result a lot, the physical quantity takes a similar size with each other in $1 \sigma$.
+$c, d_1$ values are almost the same and the $I$ value ratio between bulb intensity is also similar, $1:3:7$ in rough calculation.
+These two statistical conditions verify the fitting is valid.
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{7cm}
+        \centering
+        \includegraphics[width=7cm]{../results/bulb(15_double_slit)_fig.png}
+        \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/bulb(15_R_single_slit)_fig.png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \centering
+  \begin{subfigure}[b]{7cm}
+    \centering
+    \includegraphics[width=7cm]{../results/bulb(15_L_single_slit)_fig.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+    \caption{PCIT counts - position [cm] plot of Slit No. 15, (a) double slit, (b) right side single slit, (c) left side single slit in the black dots, blue dots, and the yellow dots, bulb intensity of 3,4, and 5 each.
+        The red line is LBF fit results.
+     }
+    \label{fig: 15_bulb_plot}
+  \end{figure}
+
+\begin{figure}[H]
+    \begin{tabular}{  m{0.6cm}|m{0.3cm}|m{1.7cm}|m{1.7cm}|m{2cm}|m{2cm}|m{2cm}|m{1cm} } 
+        exp & I & c [cm]& PCIT & $d_1$ [cm] & $d_2$ [cm] & $\Gamma$ & $R^2$ \\ \hline \hline
+        \multirow{3}{*}{all}& 3 & $0.4484$& $132.4$& $1.139$& $0.06816$& $0.0287$& 0.9922\\ \cline{2-8}
+                            & 4 & $0.4483$& $315.9$& $1.191$& $0.06801$& $0.0431$& 0.9951\\ \cline{2-8} 
+                            & 5 & $0.4486$& $643.5$& $1.178$& $0.06798$& $0.0471$& 0.9946\\ \hline
+        \multirow{3}{*}{R}  & 3 & $0.4908$& $27.15$& $0.9816$&& $0.0000$& 0.9613\\ \cline{2-8}
+                            & 4 &$0.4891$& $92.77$& $1.018$&& $0.0215$& 0.9904\\ \cline{2-8}
+                            & 5 &$0.4887$& $210.5$& $1.039$&& $0.0316$& 0.9955\\ \hline
+        \multirow{3}{*}{L}  & 3 &  $0.3832$& $20.77$& $1.045$&& $0.0000$& 0.9559\\ \cline{2-8}
+                            & 4 & $0.3862$& $60.12$& $1.120$&& $0.000125$& 0.9843\\ \cline{2-8}
+                            & 5 & $0.3841$& $154.7$& $1.176$&& $0.000264 $& 0.9945\\ \hline
+    \end{tabular}
+    \caption{Parameter statics of \ref{fig: 15_bulb_plot}, experiment results of Slit No. 15.
+     The table is too small to write all of the standard errors.
+     The errors of distance are $0.003$ [cm], and the $\Gamma$ value errors are too small in fitting covariance.
+    }
+    \label{fig: 15_bulb_parmeters}
+\end{figure}
+
+
+\begin{figure}[H]
+  \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/bulb(16_double_slit)_fig.png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{7cm}
+    \centering
+    \includegraphics[width=7cm]{../results/bulb(16_R_single_slit)_fig.png}
+    \caption{}
+\end{subfigure}
+\hfill
+\centering
+\begin{subfigure}[b]{7cm}
+  \centering
+  \includegraphics[width=7cm]{../results/bulb(16_L_single_slit)_fig.png}
+  \caption{}
+\end{subfigure}
+\hfill
+  \caption{PCIT counts - position [cm] plot of Slit No. 16, (a) double slit, (b) right side single slit, (c) left side single slit in the black dots, blue dots, and the yellow dots, bulb intensity of 3,4, and 5 each.
+      The red line is LBF fit results.
+   }
+  \label{fig: 16_bulb_plot}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{tabular}{  m{0.6cm}|m{0.3cm}|m{1.7cm}|m{1.7cm}|m{2cm}|m{2cm}|m{2cm}|m{1cm} } 
+      exp & I & c [cm]& PCIT & $d_1$ [cm] & $d_2$ [cm] & $\Gamma$ & $R^2$ \\ \hline \hline
+      \multirow{3}{*}{all}& 3 & $0.4181$& $128.7$& $1.241 $& $0.0612 $& $0.0342$& 0.984\\ \cline{2-8}
+                          & 4 & $0.4182$& $238.7$& $1.265$& $0.06125$& $0.0394$& 0.9896\\ \cline{2-8} 
+                          & 5 &$0.4182$& $662.8 $& $1.282$& $0.06112  $& $0.0471$& 0.9898\\ \hline
+      \multirow{3}{*}{R}  & 3 &$0.4663$& $27.77 $& $1.145 $&& $0.0000$& 0.9455\\  \cline{2-8}
+                          & 4 &$0.4623$& $80.89$& $1.167$&& $0.0000$& 0.9889\\ \cline{2-8}
+                          & 5 &$0.4600$& $190.0$& $1.191$&& $0.000285$& 0.9937\\ \hline
+      \multirow{3}{*}{L}  & 3 & $0.3510$& $24.96$& $1.034$&& $0.0000$& 0.9651\\ \cline{2-8}
+                          & 4 &$0.3496$& $66.62$& $1.105 $&& $0.0000$& 0.9856\\ \cline{2-8}
+                          & 5 &$0.5408$& $136.3$& $1.045$&& $0.0846$& 0.9914\\ \hline
+  \end{tabular}
+  \caption{Parameter statics of \ref{fig: 16_bulb_plot}, experiment results of Slit No. 16.
+   The table is too small to write all of the standard errors.
+   The errors of distance are $0.003$ [cm], and the $\Gamma$ value errors are too small in fitting covariance.
+  }
+  \label{fig: 16_bulb_parmeters}
+\end{figure}
+
+
+The rest of the analysis of the results is the same as the laser experiment.
+I trust the mid wavelength of the bulb filter,$\lambda_0 =  546 [nm]$,
+The slit specs calculated by the bulb experiment are shown in Fig. \ref{fig: bulb_slit_spec}.
+The $\Delta$ value of Slit No. 16, is $2 \sigma$ boundary but it is fine to have a total of one data out of $2 \sigma$ since it is possible to happen.
+The error by $\Gamma$ function is displayed in Fig. \ref{fig: bulb_dispersion}, has its minimum value at $\Gamma =0.040$.
+The wavelength dispersion $\gamma = \Gamma \lambda = 21.84 [nm]$, the FWHM value of the filter I can calculate.
+
+\begin{figure}[H]
+  \centering
+  \begin{tabular}{  m{2cm}|m{2.5cm}|m{2.5cm}|m{2.5cm}|m{2.5cm}} 
+    Slit No. & $\sigma_R [mm]$ &$\sigma_L [mm]$ &$\sigma [mm]$ & $\Delta [mm]$ \\ \hline \hline
+    14 &   $0.027 \pm 0.003 $& $ 0.024 \pm 0.002 $ & $0.023  \pm 0.003 $  & $0.347  \pm 0.005 $ \\ \hline
+    15 &  $0.026 \pm 0.002 $ & $0.025 \pm 0.001 $ & $0.023  \pm 0.002 $ & $0.399  \pm 0.0003 $\\ \hline
+    16 &  $0.023 \pm 0.002 $ & $0.026 \pm 0.001 $ & $0.023   \pm 0.002 $ & $0.444  \pm 0.0003 $ \\ 
+    
+  \end{tabular}
+  \caption{The slit width $\sigma_R, \sigma_L, \sigma$ and distance between two slit $\Delta$ of each Slit number}
+  \label{fig: bulb_slit_spec}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/bulb_wavelength_dispersion.png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \caption{Error - $\Gamma$ results of the measured data. it reaches the global minimum at $0.040$.}
+  \label{fig: bulb_dispersion}
+\end{figure}
+
+The dimensionless factor $\Gamma$ works with the wave packet length of the photon.
+The wave packet length $\alpha$, has an order of Heisenberg criteria, $\alpha \Delta p \sim h$.
+$\Delta p \sim \frac{h}{\lambda_0} \Gamma$, by definition of FWHM, can induce the order of $\alpha$.
+$n$, the number of photons simultaneously transferring the slit, can be calculated as follows.
+
+\begin{equation}
+  n = \frac{ \frac{L}{c} \times j }{\frac{L}{\alpha}} = \frac{\alpha j}{c} \sim  \frac{\lambda_0 j}{c \Gamma}
+\end{equation}
+
+$j$ is the number of photons transferring the slit in unit time, $\frac{L}{c} \times j $ is the total number of photons transferring the slit in the u-channel.
+The wave packet quantized the position to count, and the total length divided by packet size is the possible coherent position number, $\frac{L}{\alpha}$.
+For the laser experiment, about $n = 30$ numbers of photons coherently pass through the slit, making the interference pattern.
+For the bulb experiment, about $n = 4 \times 10^{-12}$ numbers of photon passes through the slit for the moment.
+This means that the events of two or more coherent photons passing through the slit are impossible, or if it does, the statistical effect will hide the possibility at all.
 
 \section{Summary}
-
+I suggested the statistical criteria of fitting validity, to compare the same parameters in different condition experiments.
+Also, I suggested dependent parameters $c, I,d_1, d_2$ and dimensionless parameter $\Gamma$ represents the dispersion ratio of the light.
+Applying the criteria in the LBF model declares instability of parameter $\Gamma$, and makes a new method.
+The method is to fit partially in total experiments, the plenty of data supports the reliability of its results.
+It is trivial to prove that the partial fitting leads the total parameters to the global minimum.
+The slit specification is 6 times verified in different experiments, the published value was right.
+Interference pattern analysis in single photon limit is performed and proved that there are no mathematical changes with the multi-photon limit version experiment.
+Doing all those jobs, for convenient code implementation is made.
+I make the module helps to fit and plot at the same time, and to upgrade the package to calculate the dispersion ratio in the partial fitting method.
 
 
 
