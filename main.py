@@ -6,6 +6,7 @@ import pandas as pd
 import pickle
 import re
 import os.path
+import matplotlib.pyplot as plt
 import warnings
 
 
@@ -380,6 +381,49 @@ for align in range(1,7):
         except AttributeError:
             continue
 
+#Err - \Gamma
+fig_file_name = "./results/laser_wavelength_dispersion.png"
+if os.path.isfile(fig_file_name) == False:
+    s_l_continuous = np.linspace(0,0.1,50)
+    err = []
+    min = 100
+    min_s_l = 0
+
+    for s_l in s_l_continuous:
+        print(f"{s_l} started")
+        
+        err_val = spi.light_dispersion_gradient_descent(
+                s_l = s_l,
+                data_set_list = data_set_list,
+                x_function = lambda x: x.parameters,
+                y_function = lambda x: x.results[0],
+                truncate = lambda x: True if x<0.8 else False,
+                fitting_function_class = lambda x: double_slit_modified_function if x.align_condition['exp_type']=='double_slit' else single_slit_modified_function,
+                rough_fitting_functions_class = lambda x: [double_slit_rough_fitting_function,double_slit_fitting_function] if  x.align_condition['exp_type']=='double_slit' else [single_slit_rough_fitting_function,single_slit_fitting_function],
+                p0_class = lambda x: laser_double_slit_param_setting if  x.align_condition['exp_type']=='double_slit' else [0.36,505,0.49],
+                fitting_param_query_class = lambda x: [None,lambda x: [*x[:4]]]if x.align_condition['exp_type']=='double_slit' else [None, None]
+            )
+        if err_val < min:
+            min =err_val
+            min_s_l = s_l
+            print(s_l)
+            
+        err.append(
+            err_val
+        )
+
+    fig = plt.figure(figsize = (4,4))
+    ax = fig.add_subplot(1,1,1)
+
+    ax.plot(s_l_continuous,err, 'k-')
+    ax.set_xlabel("$\Gamma$")
+    ax.set_ylabel("Error [$mV^2$]")
+    fig.tight_layout()
+    fig.savefig(fig_file_name)
+
+
+
+
 experiment = 'PMT_upper_boundary'
 data_set_list = datum[experiment]
 
@@ -400,7 +444,8 @@ for threshold in [0.0, 18.4]:
             fitting_function= lambda x, a,b: a*np.exp(b*x),
             p0 = [1,1e-3],
             error_y =lambda x: 2*np.std(x.results),
-            export_param_statics = f"./results/PMT_upper_boundary_statics.txt"
+            export_param_statics = f"./results/PMT_upper_boundary_statics.txt",
+            figsize = (5,4)
         )
 
         try:
@@ -435,6 +480,32 @@ for threshold in [0.0,18.4]:
             PMT_upper_boundary_fig.savefig(fig_file_name)
         except AttributeError:
             continue
+        
+data_set_list = datum['PMT_lower_boundary'] + datum['PMT_upper_boundary']
+
+
+for threshold in [0.0, 18.4]:
+        fig_file_name=f"./results/PMT_boundary_({threshold}).png"
+        if os.path.isfile(fig_file_name) == True:
+            continue
+
+        PMT_boundary_fig = spi.phys_plot(
+            data_set_list,
+            lambda x: x.parameters,
+            lambda x: sum(x.results)/len(x.results),
+            {'threshold [mV]' : threshold},
+            x_label = "High Voltage [V]",
+            y_label = "PCIT",
+            labels = lambda x: f"Threshold = {x.align_condition['threshold [mV]']}, bulb = {x.align_condition['bulb']}",
+            error_y =lambda x: 2*np.std(x.results),
+
+        )
+
+        try:
+            PMT_boundary_fig.savefig(fig_file_name)
+        except AttributeError:
+            continue
+        
 
 experiment = 'Sensor_slit_position'
 data_set_list = datum[experiment]

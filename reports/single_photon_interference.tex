@@ -48,7 +48,9 @@ But, the signal is too small and wide variance the statistical method must be ch
 In \ref{intro: data analysis} section, I uploaded to the public the analysis module and the fully activating code.
 Secondly, the data points are tightly measured for high trust in the results.
 
-(results)
+The laser interference experiment is performed in double and single slits for each slit and is statistically verified.
+The wavelength dispersion value is suggested, and its fragile limitation is checked.
+Also, the wavelength dispersion value in clever fitting is applied and successfully matches the published specification value of the experimental tool.
 
 
 \subsection{Fitting Functions: Statistical Verification}
@@ -276,6 +278,10 @@ The total codes and raw data of each parameter are uploaded to GitHub.
 (\cite{github}, \url{https://github.com/WoojinHan24/Single_Photon_Interference}).
 To clarify the file name and its content in \verb|./results/|, the appendix is shown in Fig. \ref{fig: file_appendix}.
 The Python code only to run is \verb|main.py|, which imports \verb|single_photon_interference| module, fully generating the results folder itself.
+The visibility and blocker positions are not that necessary in the actual results and discussion.
+Also, the 11 alignments have been done, the listing of those values in the report seems pointless, in file \verb|spi_raw_data.xlsx| each sheet has the alignment detail data.
+
+
 
 \begin{figure}[H]
     \begin{tabular}{  m{5.2cm} | m{8.7cm} } 
@@ -291,7 +297,24 @@ The Python code only to run is \verb|main.py|, which imports \verb|single_photon
       \hline
         laser(x y) modified fig.png & LBF plots of alignment number x, experiment type y\\
       \hline
-        laser x param statics.txt & LBF parameter results in experiment type x
+        laser x param statics.txt & LBF parameter results in experiment type x\\
+      \hline
+        PMT upper boundary ($x$).png & PCIT in different HV, for threshold $x$\\
+      \hline
+        PMT upper boundary statics.txt & Fitting parameter of PMT upper boundary plot\\
+      \hline
+        PMT lower boundary ($x$,$y$).png & PCIT in different HV, for threshold $x$, bulb intensity $y$\\
+      \hline
+        PMT lower boundary statics.txt & Fitting parameter of PMT lower boundary plot\\
+      \hline
+        sensor slit position ($x$).png & PCIT-position plot in bulb intensity of $x$\\
+      \hline
+        sensor slit statics.txt & Fitting parameter of sensor slit position plot\\
+      \hline
+        bulb($x$ y $z$) raw fig.png & PCIT ACF plots of Slit No. $x$, experiment type y, bulb intensity of $z$\\
+      \hline
+        bulb x raw param static.txt & ACF parameter results in experiment type x \\
+
     \end{tabular}
     \caption{file appendix of \cite{github}}
     \label{fig: file_appendix}
@@ -299,12 +322,312 @@ The Python code only to run is \verb|main.py|, which imports \verb|single_photon
 
 Each subsection is labeled just as same with subsection from \ref{methods: start} respectively.
 \subsection{Laser Experiment}
-6 different alignment is tried.
-The first 3 of the experiment have $0.7 cm$ truncate issues, so the single slit experiment was not performed.
-Slit number 
+In this subsection, three slits results are plotted and fitted respectively.
+For each slit, two figures are posted.
+The first figure is the voltage [mV] - detector position [cm] plots of three different experiment types, the double slit, and the single slits of each side. 
+The second figure is the table containing parameter statics of previous plots respectively.
+The row exp is the experiment type, all means the double slit case, and the R, L means the single slit of the right, left side.
+$c, I,d_1,d_2,\Gamma$ is the position of the center of the screen, and the center intensity, the proper distances, and the dispersion coefficient respectively which are defined as equation \ref{equation: modified double slit}.
 
+The pair results of Silt No. 14 are illustrated in Fig. \ref{fig: 14_laser_plot}, \ref{fig: 14_laser_parmeters}.
+The difference of $c$ value between R, L results, $c_R - c_L$ is $\Delta$ in the theoretical model.
+Because the $c_R, c_L$ is the position of the intersection point extension of each slit hole.
+But, by backlash error, we can not find a relation between the different experiment types.
+Also, note that the $\Gamma$ value is too fragile in its optimization.
+Besides the parameters of $c, d_i$, the $\Gamma$ parameter changes its optimal value sensitively reacting to other parameters.
+So, I only used $c, I,d_i$ values in single distribution fitting, and discuss the data of wavelength and dispersion ($\Gamma$) below with other slits results.
+It is fine to check $c, I,d_i$, which is stable in its results in the variance of other parameters.
+Except for $\Gamma$, by the statistical criteria I made, each parameter has a similar value with the other experiment in the same alignment, the LBF fitting is valid in Slit No. 14.
+Especially $d_1$ is an important parameter that holds the information of slit width($\sigma$), is the same in $1\sigma$.
+As mentioned at \ref{intro: statistical_setup_fitting_method}, $d_i$ have a distribution of Lorentzian by light dispersion signal to FWHM ratio as $\Gamma$.
+The published $\Gamma$ value is 0.03, which $\sigma_{d_i} = \sqrt{(\Gamma d_i)^2 + \sigma_{d_i0}^2}$ as an statistical error of data.
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{7cm}
+        \centering
+        \includegraphics[width=7cm]{../results/laser(6_double_slit)_modified_fig.png}
+        \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/laser(6_R_single_slit)_modified_fig.png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \centering
+  \begin{subfigure}[b]{7cm}
+    \centering
+    \includegraphics[width=7cm]{../results/laser(6_L_single_slit)_modified_fig.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+    \caption{Detected voltage [mV] - position [cm] plot of Slit No. 14, (a) double slit, (b) right side single slit, (c) left side single slit in the black dot.
+        The red line is LBF fit results.
+     }
+    \label{fig: 14_laser_plot}
+  \end{figure}
+
+\begin{figure}[H]
+    \begin{tabular}{  m{0.6cm}|m{2cm}|m{1.7cm}|m{2cm}|m{2.3cm}|m{2.3cm}|m{1cm} } 
+        exp & c [mm]& I[mV] & $d_1$ [cm] & $d_2$ [mm] & $\Gamma$ & $R^2$ \\ \hline \hline
+        all& $4.075 \pm 0.001$& $4100 \pm 328$& $1.309 \pm 0.01$& $0.9339 \pm 0.003$& $0.5433 \pm 0.001$& 0.9928\\ \hline 
+        R& $ 4.541 \pm 0.001$& $1294 \pm 2$& $ 1.194 \pm 0.01$& & $ 0.0949 \pm 0.002$& 0.9999\\ \hline 
+        L& $ 3.652 \pm 0.001$& $977.0 \pm 5.3$& $1.276 \pm 0.01$&& $ 0.101 \pm 0.06$& 0.9994\\ \hline 
+    \end{tabular}
+    \caption{Parameter statics of \ref{fig: 14_laser_plot}, experiment results of Slit No. 14.}
+    \label{fig: 14_laser_parmeters}
+\end{figure}
+
+The pair results of Silt No. 15 are illustrated in Fig. \ref{fig: 15_laser_plot}, \ref{fig: 15_laser_parmeters}.
+The data is also verified by the statistical criteria except for the $\Gamma$ value. 
+The pair results of Silt No. 16 are illustrated in Fig. \ref{fig: 16_laser_plot}, \ref{fig: 16_laser_parmeters}.
+The data is also verified by the statistical criteria except for the $\Gamma$ value. 
+
+\begin{figure}[H]
+    \begin{subfigure}[b]{7cm}
+        \centering
+        \includegraphics[width=7cm]{../results/laser(4_double_slit)_modified_fig.png}
+        \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/laser(4_R_single_slit)_modified_fig.png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \centering
+  \begin{subfigure}[b]{7cm}
+    \centering
+    \includegraphics[width=7cm]{../results/laser(4_L_single_slit)_modified_fig.png}
+    \caption{}
+  \end{subfigure}
+  \hfill
+    \caption{Detected voltage [mV] - position [cm] plot of Slit No. 15, (a) double slit, (b) right side single slit, (c) left side single slit in the black dot.
+        The red line is LBF fit results.
+     }
+    \label{fig: 15_laser_plot}
+  \end{figure}
+
+\begin{figure}[H]
+    \begin{tabular}{  m{0.6cm}|m{2cm}|m{1.7cm}|m{2cm}|m{2.3cm}|m{2.3cm}|m{1cm} } 
+        exp & c [mm]& I[mV] & $d_1$ [cm] & $d_2$ [mm] & $\Gamma$ & $R^2$ \\ \hline \hline
+        all& $4.164 \pm 0.001$& $3852 \pm 160$& $1.544 \pm 0.01$& $0.8202 \pm 0.003$& $0.03604 \pm 0.001$& 0.9961\\ \hline 
+        R& $4.683 \pm 0.001$& $1134 \pm 1$& $1.393 \pm 0.01$& &$0.088 \pm 0.001$& 0.9999\\ \hline 
+        L& $3.539 \pm 0.001$& $961.4 \pm 16.6$& $1.426 \pm 0.01$& &$0.2208 \pm 0.001$& 0.9988\\ \hline 
+    \end{tabular}
+    \caption{Parameter statics of \ref{fig: 15_laser_plot}, experiment results of Slit No. 15.}
+    \label{fig: 15_laser_parmeters}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{subfigure}[b]{6cm}
+      \centering
+      \includegraphics[width=6cm]{../results/laser(5_double_slit)_modified_fig.png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{6cm}
+    \centering
+    \includegraphics[width=6cm]{../results/laser(5_R_single_slit)_modified_fig.png}
+    \caption{}
+\end{subfigure}
+\hfill
+\centering
+\begin{subfigure}[b]{6cm}
+  \centering
+  \includegraphics[width=6cm]{../results/laser(5_L_single_slit)_modified_fig.png}
+  \caption{}
+\end{subfigure}
+\hfill
+  \caption{Detected voltage [mV] - position [cm] plot of Slit No. 16, (a) double slit, (b) right side single slit(two trial is both plotted), (c) left side single slit in the black dot.
+      The red line is LBF fit results.
+   }
+  \label{fig: 16_laser_plot}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{tabular}{  m{0.6cm}|m{2cm}|m{1.7cm}|m{2cm}|m{2.3cm}|m{2.3cm}|m{1cm} } 
+      exp & c [mm]& I[mV] & $d_1$ [cm] & $d_2$ [mm] & $\Gamma$ & $R^2$ \\ \hline \hline
+      all& $4.182 \pm 0.001$& $2370 \pm 111$& $1.505 \pm 0.01$& $0.735 \pm 0.003$& $0.02939 \pm 0.001$& 0.9923\\ \hline 
+      R1& $4.560 \pm 0.001$& $662.8 \pm 139$& $1.33 \pm 0.01$& &$0.0953 \pm 0.0058$& 0.9655\\ \hline 
+      R2& $4.545 \pm 0.001$& $558.4 \pm 80.6$& $1.326 \pm 0.01$& &$0.0727 \pm 0.0070$& 0.9695\\ \hline 
+      L& $3.565 \pm 0.001$& $569.4 \pm 12.2$& $1.436 \pm 0.01$& &$0 \pm 0.000748$& 0.9926\\ \hline 
+
+  \end{tabular}
+  \caption{Parameter statics of \ref{fig: 16_laser_plot}, experiment results of Slit No. 16.}
+  \label{fig: 16_laser_parmeters}
+\end{figure}
+
+The errors of $d_i$ are usually cut in order of measurement error, the fitting covariances are too small to be disregarded.
+The system has the ambiguity of one external parameter, I believe the wavelength of the light source is $620 [nm]$ to establish $\sigma, \Delta$.
+Fig. \ref{fig: laser_slit_spec} is the table of measured results of each slit number.
+$\sigma_{R,L}$ are single slit width of each side, and $\sigma$ is fitted slit width parameter in double slit.
+It is definite that $\sigma$ values are the same in the range of error, the criteria and assumption hold.
+
+\begin{figure}[H]
+  \centering
+  \begin{tabular}{  m{2cm}|m{2.5cm}|m{2.5cm}|m{2.5cm}|m{2.5cm}} 
+    Slit No. & $\sigma_R [mm]$ &$\sigma_L [mm]$ &$\sigma [mm]$ & $\Delta [mm]$ \\ \hline \hline
+    14 &   $0.0279 \pm 0.001 $& $ 0.0261 \pm 0.001 $ & $0.0255  \pm 0.001 $  & $0.357  \pm 0.0003 $ \\ \hline
+    15 &  $0.0240  \pm 0.001 $ & $0.0234 \pm 0.001 $ & $0.0216   \pm 0.001 $ & $0.407  \pm 0.0003 $\\ \hline
+    16 &  $0.251  \pm 0.001 $ & $0.0232 \pm 0.001 $ & $0.0222 \pm 0.001 $   & $ 0.454  \pm 0.0002 $   \\ 
+    
+  \end{tabular}
+  \caption{The slit width $\sigma_R, \sigma_L, \sigma$ and distance between two slit $\Delta$ of each Slit number}
+  \label{fig: laser_slit_spec}
+\end{figure}
+
+Finally, the $\Gamma$ value is too widely distributed in various experiment settings.
+Theoretically, the $\Gamma$ has the physical meaning of wavelength dispersion of the laser, which must have the same value nonrelated to the settings.
+However, the mean square error value is too sensible to the differ of $\Gamma$, each fitting results are untrustable.
+In each, the true values of $\Gamma_0$, $Err(I, I(;\Gamma))$ are the global minimum by its definition, but the optimizer will fall in the local minima of $\Gamma$.
+But the local minima are located in 6D parameter space junked with other parameters $c, d_i, I$.
+Therefore, I make a clever idea to break through this problem.
+Let $Err(I_1(exp), I_2(parameters))$ denote the error of the measurement and fitting function.
+$I_1$ is the experimental results of $(x, I)$ pairs in the experiment setting, I write $(exp)$ as respective indices of the whole experiment setting, such as (Slit No. 14, Align trial 5, double slit experiment) is one of the experiment setting indices.
+$I_2$ is a function $I(x,param)$.
+Then the $Err(I_1, I_2)$ is defined as equation \ref{equation: error_function} to exclude the effect of numbers in each experiment type.
+$M(I)$ is the mean value of the set.
+
+\begin{align}
+  &s_{res} = \sum_{(x,I)} (I_1(x)-I_2(x,param))^2 \nonumber\\
+  &s_{tot} = \sum_{(x,I)}(I- M(I))^2 \nonumber\\
+  &Err(I_1, I_2) = \frac{s_{res}}{ s_{tot}} = 1-R^2 \label{equation: error_function}
+\end{align}
+
+Then the total error function $Err(\Gamma)$ is defined as equation \ref{equation: error_function_Gamma}.
+For fixed $\Gamma$, fit parameters to every experiment the sum of minimized error is the error function of $\Gamma$.
+
+\begin{equation}
+  Err(\Gamma) = \sum_{(exp)} \min_{(param)} Err(I_1 (exp), I_2(param, \Gamma))
+  \label{equation: error_function_Gamma}
+\end{equation}
+
+Fig. \ref{fig: laser_dispersion} is the plot of $Err(\Gamma)$.
+The global minimum is easily found by $0.043$, which means the wavelength FWHM value $\gamma = \Gamma \times \lambda = 28.8 [nm]$.
+The published FWHM is $\gamma = 20 [nm]$, which means this fitting is right.
+The standard error of this value is not affordable, since this fitting consumes a lot of computing complexity, last 20 minutes, the covariances are hard to calculate.
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/laser_wavelength_dispersion.png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \caption{Error [$mV^2$] - $\Gamma$ results of the measured data. it reaches the global minimum at $0.043$.}
+  \label{fig: laser_dispersion}
+\end{figure}
 
 \subsection{PMT Threshold}
+ The lower boundary and upper boundary of HV are required in the preset of the single photon limit experiment.
+ In the dark, the unwanted PCIT occurs following equation \ref{equation: PMT}.
+ The fitting result is sufficiently accurate, and the $a$ value is constant to the threshold value as the theory predicts.
+
+ \begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/PMT_upper_boundary_(0.0).png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{7cm}
+    \centering
+    \includegraphics[width=7cm]{../results/PMT_upper_boundary_(18.4).png}
+    \caption{}
+\end{subfigure}
+\hfill
+  \caption{PCIT - HV [V] plots in threshold voltage (a) 0.00, (b) 18.4 [mV] in black dots,
+    the red line is the fitting of $N(V) = a e^{bV}$
+  }
+  \label{fig: PMT_upper_boundary}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \begin{tabular}{  m{4cm}|m{2.5cm}|m{2.5cm}|m{2.5cm}} 
+    Threshold [mV]& a& b$[V^{-1}$]& $R^2$ \\ \hline \hline
+    0.0& $0.12 \pm 0.01$& $0.0081 \pm 0.001$& 0.9716\\ \hline 
+    18.4& $0.012 \pm 0.01$& $0.0095 \pm 0.001$& 0.9756\\
+  \end{tabular}
+  \caption{The parameter of Fig. \ref{fig: PMT_upper_boundary}}
+  \label{fig: PMT_upper_boundary_statics}
+\end{figure}
+
+Fig. \ref{fig: PMT_boundary} is the PCIT - HV plots in different bulb intensities.
+Fig. \ref{fig: PMT_boundary}(b), the data of bulb intensity 1,2 is too small to distinguish from dark signal even in high HV values.
+Therefore, I used only 3,4,5 intensities of bulb light and a threshold of 18.4 [mV].
+Also, I chose the HV value where the $d(\Delta N)/dV = 0$, the highest resolution region, $HV = 720 [V]$
+The threshold is accurate at $18.4 [mV]$, double-checked with an oscilloscope.
+In HV $674 [V]$, PCIT value is $450 \pm 20$, where threshold $18.4 [mV]$ oscilloscope count is $445 \pm 25$
+at the threshold $17.6 [mV]$ and $19.2 [mV]$, the oscilloscope counts are $661 \pm 33$ and $290 \pm 13$ respectively.
+Which determines the threshold voltage as $18.4 \pm 0.4 [mV]$.
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{10cm}
+      \centering
+      \includegraphics[width=10cm]{../results/PMT_boundary_(0.0).png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{10cm}
+    \centering
+    \includegraphics[width=10cm]{../results/PMT_boundary_(18.4).png}
+    \caption{}
+\end{subfigure}
+\hfill
+  \caption{PCIT - HV [V] plots in different bulb intensity and threshold (a) 0.00, (b) 18.4 [mV] in black dots.
+  }
+  \label{fig: PMT_boundary}
+\end{figure}
+
+For the rest of the experiment, the threshold and HV values are fixed at $18.4 [mV]$ and $720 [V]$.
+The sensor slit alignment is done by measuring PCIT counts in plots of position, for different bulb intensities.
+The zero signal offset average is $5.95 \pm 2.98$, all data are the subtracted results of the zero signal offset.
+The Gaussian fitting does not give dramatic physical meaning, but the sensor slit center position is almost the $0.5 [cm]$, the evidence of successful alignment.
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{7cm}
+      \centering
+      \includegraphics[width=7cm]{../results/sensor_slit_position_(3).png}
+      \caption{}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{7cm}
+    \centering
+    \includegraphics[width=7cm]{../results/sensor_slit_position_(4).png}
+    \caption{}
+\end{subfigure}
+\centering
+\hfill
+\begin{subfigure}[b]{7cm}
+  \centering
+  \includegraphics[width=7cm]{../results/sensor_slit_position_(5).png}
+  \caption{}
+\end{subfigure}
+\hfill
+  \caption{PCIT - position [cm] plots in different bulb intensity, no double slit condition results of bulb intensity (a) 3, (b) 4 (c) 5  in black dots.
+    The red line is Gaussian fitting, $N(x) = A e^{-(x-m)^2/2\sigma^2}$.
+  }
+  \label{fig: sensor_slit_position}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \begin{tabular}{  m{1cm}|m{2.5cm}|m{2.5cm}|m{2.5cm}| m{2.5cm}} 
+    bulb& A& $m[cm]$& $\sigma[cm]$& $R^2$ \\ \hline 
+    3.0& $297.0 \pm 13.1$& $0.5182 \pm 0.001$& $0.2617 \pm 0.002$& 0.9477\\ \hline 
+    4.0& $1194.0 \pm 47.3$& $0.5072 \pm 0.001$& $0.2529 \pm 0.004$& 0.9886\\ \hline 
+    5.0& $3074.0 \pm 1477$& $0.5091 \pm 0.001$& $0.2613 \pm 0.002$& 0.9445\\ \hline 
+    
+  \end{tabular}
+  \caption{The parameter of Fig. \ref{fig: sensor_slit_position}}
+  \label{fig: sensor_slit_position_statics}
+\end{figure}
+
 
 \subsection{Bulb Experiment: Single Photon Limit}
 

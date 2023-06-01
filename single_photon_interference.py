@@ -81,7 +81,7 @@ def phys_plot(
     selection,
     x_label,
     y_label,
-    fmts = ['k.','b.','y.','c.'],
+    fmts = ['k.','b.','y.','c.', 'r.', 'm.'],
     error_x = None,
     error_y = None,
     labels = None,
@@ -91,7 +91,8 @@ def phys_plot(
     p0 = None,
     p0_function = None,
     truncate = None,
-    export_param_statics =None
+    export_param_statics =None,
+    figsize = (8,4)
 ):
     #data_set_list : list of spi.Data_set() in same experiment
     #x_function : the function outputs x_variable in the plot, in function of spi.Data() type
@@ -109,7 +110,7 @@ def phys_plot(
     #export param statics : export parameters in form of LaTex table, leave blank in each parameters
     
     
-    fig = plt.figure(figsize = (8,4))
+    fig = plt.figure(figsize = figsize)
     ax = fig.add_subplot(1,1,1)
 
 
@@ -233,3 +234,47 @@ def get_regression_result(
 
     return param,param_covariance
 
+def light_dispersion_gradient_descent(
+    s_l, data_set_list, x_function, y_function, truncate, fitting_function_class, rough_fitting_functions_class, p0_class, fitting_param_query_class
+):
+    return_value =0
+    for data_set in data_set_list:
+        
+        fitting_function = fitting_function_class(data_set)
+        rough_fitting_functions = rough_fitting_functions_class(data_set)
+        p0 = p0_class(data_set)
+        fitting_param_query = fitting_param_query_class(data_set)
+        
+        
+        
+        x = [x_function(data) for data in data_set.data_list]
+        y = [y_function(data) for data in data_set.data_list]
+        
+        x_fit = np.array([x_val for x_val in x if truncate == None or truncate(x_val)==True])
+        y_fit = np.array([y_val for x_val,y_val in zip(x,y) if  truncate == None or truncate(x_val)==True])
+
+        if type(p0) == list:
+            param = p0
+        else:
+            param = p0(x_fit,y_fit)
+
+
+        for rough_fitting_function, param_function in zip(rough_fitting_functions, fitting_param_query):
+            param,_ = get_regression_result(x_fit, y_fit, rough_fitting_function,param,1000)
+            if param_function is not None:
+                param = param_function(param)
+
+        param,param_cov = get_regression_result(
+                            x_fit,
+                            y_fit,
+                            lambda x, *param: fitting_function(x, *param, s_l),
+                            param
+                        )
+        
+        residuals = y_fit - fitting_function(x_fit,*param,s_l)
+        ss_res = np.sum(residuals**2)
+        ss_tot = np.sum((y_fit-np.mean(y_fit))**2)
+        return_value += ss_res/ss_tot
+        
+    
+    return return_value
